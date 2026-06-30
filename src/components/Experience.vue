@@ -23,15 +23,15 @@
               <div class="timeline-circle" 
                    :style="{ backgroundColor: item.brandColor, borderColor: item.brandColor }"
                    @click="item.type === 'milestone' ? openMilestoneModal(item) : null"
-                   :class="{ 'clickable': item.type === 'milestone' || item.type === 'continue' }">
+                   :class="{ 'clickable': item.type === 'milestone' || item.type === 'continue', 'logo-circle-live4life': item.type === 'company' && item.companyId === 'live4life' }">
                 <img v-if="item.type === 'company'" :src="item.logo" :alt="item.name" class="circle-logo" />
-                <i v-else-if="item.type === 'milestone'" class="fas" :class="milestoneIcons[item.title] || 'fa-star'" style="font-size: 1.8rem; color: white;"></i>
+                <span v-else-if="item.type === 'milestone'" class="milestone-number" style="font-size: 1.8rem; color: white; font-weight: bold;">{{ item.milestoneIndex }}</span>
                 <i v-else-if="item.type === 'continue'" class="fas fa-ellipsis-h" style="font-size: 1.8rem; color: white;"></i>
               </div>
               
               <!-- Content Card -->
               <div class="horizontal-card" 
-                   :style="{ borderColor: item.brandColor }"
+                   :style="{ borderColor: item.brandColor, '--company-brand-color': item.type === 'company' ? item.brandColor : null }"
                    :class="{ 'milestone-card-compact': item.type === 'milestone', 'continue-card': item.type === 'continue' }"
                    @click="item.type === 'milestone' ? openMilestoneModal(item) : null">
                 <!-- Company Header -->
@@ -136,7 +136,7 @@ export default {
           position: 'Analista de Datos & Desarrollador',
           type: 'AgroTech',
           brandColor: '#fd801d',
-          description: 'AgroTech dedicada a la digitalización del trabajo en el campo. 🍊',
+          description: 'AgroTech dedicada a la digitalización del trabajo en el campo.',
           milestones: [
             {
               id: 1,
@@ -328,18 +328,18 @@ export default {
       svg.style.width = `${totalWidth}px`
       
       // Crear el path ondulado con más serpenteo y curvas pronunciadas
-      let pathData = 'M 50 100 '
+      let pathData = 'M 50 175 '
       const amplitude = 100 // Altura de la onda muy aumentada
       const wavelength = itemWidth // Longitud de onda = ancho del item
       
       for (let i = 0; i < itemCount; i++) {
         const x = 50 + (i * itemWidth) + (itemWidth / 2)
-        const y = i % 2 === 0 ? 100 - amplitude : 100 + amplitude
+        const y = i % 2 === 0 ? 175 - amplitude : 175 + amplitude
         
         if (i === 0) {
           pathData += `Q ${x - wavelength / 4} ${y} ${x} ${y} `
         } else {
-          const prevY = (i - 1) % 2 === 0 ? 100 - amplitude : 100 + amplitude
+          const prevY = (i - 1) % 2 === 0 ? 175 - amplitude : 175 + amplitude
           const prevX = 50 + ((i - 1) * itemWidth) + (itemWidth / 2)
           const controlX1 = prevX + (wavelength / 3)
           const controlY1 = prevY
@@ -382,12 +382,13 @@ h2 {
   width: 100%;
   position: relative;
   padding: 2rem 0;
+  /* background: linear-gradient(135deg, rgb(102, 126, 234), rgba(118, 75, 162, 0.05)); */
 }
 
 .roadmap-horizontal-container {
   position: relative;
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: hidden;
   padding: 6rem 2rem;
   margin: 0 auto;
   scroll-behavior: smooth;
@@ -417,7 +418,7 @@ h2 {
 .wave-line {
   position: absolute;
   width: 100%;
-  height: 200px;
+  height: 350px;
   top: 50%;
   left: 0;
   transform: translateY(-50%);
@@ -508,6 +509,12 @@ h2 {
   border-radius: 50%;
 }
 
+/* White background for Live4Life logo */
+.timeline-circle.logo-circle-live4life {
+  background-color: white !important;
+  border-color: white !important;
+}
+
 /* Horizontal Card */
 .horizontal-card {
   background: var(--card-bg);
@@ -565,22 +572,32 @@ h2 {
 }
 
 /* Company Content */
+.company-content {
+  position: relative;
+}
+
+/* Invertir colores para cards de company */
+.horizontal-item .horizontal-card:has(.company-content) {
+  background: var(--company-brand-color, var(--card-bg));
+}
+
 .company-content h3 {
   font-size: 1.6rem;
   margin-bottom: 0.75rem;
   line-height: 1.2;
+  color: white !important;
 }
 
 .company-content .position {
   font-size: 1.05rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.9) !important;
   margin-bottom: 0.75rem;
 }
 
 .company-content .description {
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.85) !important;
   line-height: 1.6;
 }
 
