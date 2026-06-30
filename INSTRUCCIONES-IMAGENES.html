@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo Agregar Imágenes - Portfolio</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #35495e;
+            border-bottom: 3px solid #42b883;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #42b883;
+            margin-top: 30px;
+        }
+        code {
+            background: #f0f0f0;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e74c3c;
+        }
+        .step {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #42b883;
+            border-radius: 5px;
+        }
+        .note {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .example {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📸 Guía: Cómo Agregar Imágenes a tu Portfolio</h1>
+        
+        <h2>Paso 1: Guarda tu imagen del Dashboard</h2>
+        <div class="step">
+            <p><strong>Para el dashboard de Power BI que compartiste:</strong></p>
+            <ol>
+                <li>Abre la imagen del dashboard en tu navegador o visor de imágenes</li>
+                <li>Haz clic derecho > <strong>Guardar imagen como...</strong></li>
+                <li>Guárdala en: <code>PRB-Portfolio/public/images/</code></li>
+                <li>Nómbrala como: <code>dashboard-powerbi.jpg</code></li>
+            </ol>
+        </div>
+
+        <h2>Paso 2: La imagen ya está configurada</h2>
+        <div class="note">
+            <strong>✅ ¡Buenas noticias!</strong> Ya configuré el dashboard en tu experiencia de VisualNacert. 
+            Solo necesitas guardar la imagen con el nombre correcto en la carpeta <code>public/images/</code>
+        </div>
+
+        <h2>Paso 3: Agregar más imágenes (opcional)</h2>
+        <div class="step">
+            <p>Para agregar imágenes a otros hitos, edita el archivo <code>src/components/Experience.vue</code>:</p>
+            
+            <div class="example">
+                <strong>Ejemplo:</strong>
+                <pre>
+{
+  id: 2,
+  title: 'Integración de Stripe',
+  description: 'Sistema de pagos...',
+  technologies: ['Stripe', 'Django'],
+  images: ['stripe-dashboard.jpg', 'payment-flow.png']
+}
+                </pre>
+            </div>
+        </div>
+
+        <h2>🎯 Ubicación de las imágenes</h2>
+        <div class="step">
+            <p><strong>Ruta completa:</strong></p>
+            <code>C:\Users\live4life\Desktop\PRB-Portfolio\public\images\</code>
+            
+            <p style="margin-top: 15px;"><strong>Imágenes que necesitas agregar:</strong></p>
+            <ul>
+                <li>✅ <code>dashboard-powerbi.jpg</code> - Dashboard de VisualNacert (ya configurado)</li>
+                <li>Cualquier otra imagen que quieras mostrar en tus hitos</li>
+            </ul>
+        </div>
+
+        <h2>📋 Formatos recomendados</h2>
+        <div class="example">
+            <ul>
+                <li><strong>JPG/JPEG:</strong> Para fotografías y capturas de pantalla</li>
+                <li><strong>PNG:</strong> Para imágenes con transparencia</li>
+                <li><strong>WebP:</strong> Para mejor compresión (más moderno)</li>
+            </ul>
+            <p><strong>Tamaño máximo recomendado:</strong> 2MB por imagen</p>
+            <p><strong>Resolución:</strong> 1920x1080 o menor</p>
+        </div>
+
+        <h2>🚀 ¡Listo!</h2>
+        <p>Una vez guardes las imágenes en la carpeta, el servidor de desarrollo las detectará automáticamente. 
+        Solo recarga tu navegador en <code>http://localhost:5173</code> para verlas.</p>
+    </div>
+</body>
+</html>
