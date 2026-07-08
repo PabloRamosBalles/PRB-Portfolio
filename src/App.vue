@@ -1,11 +1,10 @@
 <template>
   <div id="app">
     <Loading :isLoading="isLoading" />
-    <Navigation />
     <Hero />
-    <About />
     <Experience />
     <Skills />
+    <About />
     <Contact />
     <Footer />
   </div>
@@ -13,7 +12,6 @@
 
 <script>
 import Loading from './components/Loading.vue'
-import Navigation from './components/Navigation.vue'
 import Hero from './components/Hero.vue'
 import About from './components/About.vue'
 // import Experience from './components/Experience.vue'  // Estilo original
@@ -27,7 +25,6 @@ export default {
   name: 'App',
   components: {
     Loading,
-    Navigation,
     Hero,
     About,
     Experience,

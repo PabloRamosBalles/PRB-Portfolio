@@ -95,16 +95,87 @@
   background: linear-gradient(135deg, #0d1626 0%, #1a1f3a 100%) !important;
 }
 
+.dark-theme #contacto {
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%) !important;
+}
+
+.dark-theme .contact-form-wrapper {
+  background: linear-gradient(135deg, #141829 0%, #1a1f3a 100%);
+  border-color: rgba(96, 165, 250, 0.15);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .contact-links {
+  background: linear-gradient(135deg, #141829 0%, #1a1f3a 100%);
+  border-color: rgba(96, 165, 250, 0.15);
+}
+
+.dark-theme .form-group label {
+  color: #e0e6ed;
+}
+
+.dark-theme .form-group input,
+.dark-theme .form-group textarea {
+  background: #0f1621;
+  color: #e0e6ed;
+  border-color: #2d3748;
+}
+
+.dark-theme .form-group input::placeholder,
+.dark-theme .form-group textarea::placeholder {
+  color: #8b92a0;
+}
+
+.dark-theme .form-group input:focus,
+.dark-theme .form-group textarea:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+  background: #141829;
+}
+
+.dark-theme .btn-submit {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  box-shadow: 0 4px 15px rgba(96, 165, 250, 0.3);
+}
+
+.dark-theme .btn-submit:hover {
+  box-shadow: 0 8px 25px rgba(96, 165, 250, 0.4);
+}
+
+.dark-theme .contact-link {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  border-color: #60a5fa;
+  color: white;
+}
+
+.dark-theme .contact-link:hover {
+  box-shadow: 0 6px 20px rgba(96, 165, 250, 0.4);
+}
+
 .dark-theme .carousel-btn {
-  background: #f5f7fb;
-  color: #0a0e27;
-  border-color: #e0e6ed;
+  background: #141829;
+  color: #60a5fa;
+  border-color: #2d3748;
 }
 
 .dark-theme .carousel-btn:hover {
-  background: #e0e6ed;
+  background: #60a5fa;
   color: #0a0e27;
   border-color: #60a5fa;
+  transform: scale(1.1);
+}
+
+.dark-theme .dot {
+  background: #2d3748;
+}
+
+.dark-theme .dot:hover {
+  background: #60a5fa;
+  transform: scale(1.2);
+}
+
+.dark-theme .dot.active {
+  background: #60a5fa;
 }
 
 * {
@@ -454,6 +525,7 @@ section {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-color: rgba(0, 0, 0, 0.8);
+    min-width: 100%;
   }
   
   .dark-theme nav {
@@ -539,7 +611,7 @@ img:hover {
 
 /* Mejora de scroll para toda la página */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {

@@ -126,7 +126,9 @@ export default {
         'Integraciones Inmobiliarias': 'fa-building',
         'Embudo de Venta para Leads': 'fa-filter',
         'Formación de Personal': 'fa-chalkboard-user',
-        'Optimización y Configuración Google Cloud': 'fa-cloud'
+        'Optimización y Configuración Google Cloud': 'fa-cloud',
+        'Optimización de Imágenes con Pillow y Celery': 'fa-image',
+        'Optimización de Consultas N+1 con Django ORM': 'fa-bolt'
       },
       companies: [
         {
@@ -210,6 +212,20 @@ export default {
               title: 'Optimización y Configuración Google Cloud',
               description: 'Arquitectura y optimización completa del entorno Google Cloud. Configuración de Cloud Run para orquestación de contenedores, implementación de Cloud Build para CI/CD automatizado, optimización de costes y recursos. Gestión de Cloud Storage para assets y backups.',
               technologies: ['Google Cloud Run', 'Cloud Build', 'Cloud Storage', 'Docker', 'CI/CD'],
+              images: []
+            },
+            {
+              id: 7,
+              title: 'Optimización de Imágenes con Pillow y Celery',
+              description: 'Implementación de sistema automatizado de optimización de imágenes utilizando Pillow para procesar imágenes subidas por usuarios. Generación automática de múltiples formatos (JPG y WebP) y versiones responsive (small, large) para diferentes tamaños de pantalla. Utilizando Celery para procesamiento asincrónico de imágenes sin bloquear la aplicación. Resultados: Reducción del peso total de imágenes en un 20% y mejora en tiempos de carga de hasta 40% gracias a la optimización de formatos y tamaños responsivos.',
+              technologies: ['Python', 'Pillow', 'Celery', 'Django', 'WebP', 'Image Optimization'],
+              images: []
+            },
+            {
+              id: 8,
+              title: 'Optimización de Consultas N+1 con Django ORM',
+              description: 'Identificación y resolución del problema clásico N+1 en consultas a base de datos. Implementación de select_related() y prefetch_related() en las consultas principales de la aplicación, eliminando consultas redundantes. Refactorización de views y serializers para optimizar la carga de datos relacionados. Resultados: Mejora de 4x a 10x en tiempos de carga de vistas principales, eliminando llamadas innecesarias a la base de datos y optimizando el rendimiento general de la API.',
+              technologies: ['Django', 'PostgreSQL', 'Django ORM', 'Query Optimization', 'Performance'],
               images: []
             }
           ]

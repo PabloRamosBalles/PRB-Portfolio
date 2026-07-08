@@ -239,9 +239,9 @@ export default {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: 2px solid var(--border-color);
-  background: var(--card-bg);
-  color: var(--text-primary);
+  border: 2px solid #000000;
+  background: #000000;
+  color: #ffffff;
   font-size: 1.2rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -273,19 +273,19 @@ export default {
   height: 12px;
   border-radius: 50%;
   border: none;
-  background: var(--border-color);
+  background: #cccccc;
   cursor: pointer;
   transition: all 0.3s ease;
   padding: 0;
 }
 
 .dot:hover {
-  background: var(--primary-color);
+  background: #000000;
   transform: scale(1.2);
 }
 
 .dot.active {
-  background: var(--primary-color);
+  background: #000000;
   width: 32px;
   border-radius: 6px;
 }

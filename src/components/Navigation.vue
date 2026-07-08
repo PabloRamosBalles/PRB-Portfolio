@@ -5,9 +5,9 @@
       <div class="nav-content">
         <ul class="nav-links" :class="{ open: mobileMenuOpen }">
           <li><a href="#inicio" :class="{ active: activeSection === 'inicio' }" @click="mobileMenuOpen = false">Inicio</a></li>
-          <li><a href="#about" :class="{ active: activeSection === 'about' }" @click="mobileMenuOpen = false">Sobre mí</a></li>
           <li><a href="#experiencia" :class="{ active: activeSection === 'experiencia' }" @click="mobileMenuOpen = false">Experiencia</a></li>
           <li><a href="#habilidades" :class="{ active: activeSection === 'habilidades' }" @click="mobileMenuOpen = false">Habilidades</a></li>
+          <li><a href="#about" :class="{ active: activeSection === 'about' }" @click="mobileMenuOpen = false">Sobre mí</a></li>
           <li><a href="#contacto" :class="{ active: activeSection === 'contacto' }" @click="mobileMenuOpen = false">Contacto</a></li>
         </ul>
         <button class="hamburger" @click="mobileMenuOpen = !mobileMenuOpen" :class="{ open: mobileMenuOpen }">
@@ -15,10 +15,10 @@
           <span></span>
           <span></span>
         </button>
-        <button class="theme-toggle" @click="toggleTheme" :title="isDarkMode ? 'Modo claro' : 'Modo oscuro'">
+        <!-- <button class="theme-toggle" @click="toggleTheme" :title="isDarkMode ? 'Modo claro' : 'Modo oscuro'">
           <span v-if="isDarkMode" class="icon">☀️</span>
           <span v-else class="icon">🌙</span>
-        </button>
+        </button> -->
       </div>
     </div>
   </nav>
@@ -101,29 +101,34 @@ export default {
 
 <style scoped>
 nav {
-  background-color: var(--nav-bg);
+  background-color: transparent;
   padding: 1rem 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
+  box-shadow: none;
+  position: relative;
   z-index: 100;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 nav.dark-mode {
-  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+  background-color: transparent;
+  box-shadow: none;
 }
 
 nav .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
 }
 
 nav h1 {
   color: var(--nav-text);
   font-size: 1.5rem;
   transition: color 0.3s ease;
+  white-space: nowrap;
 }
 
 .nav-content {
@@ -210,9 +215,27 @@ nav a.active {
 }
 
 @media (max-width: 768px) {
+  nav .container {
+    position: relative;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav h1 {
+    order: 1;
+    flex: 1;
+    text-align: center;
+  }
+
   .nav-content {
     gap: 0.5rem;
-    position: relative;
+    order: 2;
+    align-self: flex-start;
+    width: 100%;
+    justify-content: flex-end;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 
   .hamburger {
@@ -224,17 +247,20 @@ nav a.active {
     top: 100%;
     left: 0;
     right: 0;
-    background: var(--nav-bg);
+    width: 100%;
+    background: rgba(0, 0, 0, 0.95);
     flex-direction: column;
     gap: 0;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
     border-bottom: 1px solid rgba(96, 165, 250, 0.1);
+    display: flex;
   }
 
   .nav-links.open {
-    max-height: 400px;
+    max-height: 500px;
+    overflow-y: auto;
   }
 
   .nav-links li {
@@ -246,6 +272,8 @@ nav a.active {
     padding: 1rem;
     border: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    white-space: normal;
+    word-break: break-word;
   }
 
   .nav-links li a:hover,

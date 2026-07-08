@@ -1,5 +1,6 @@
 <template>
   <section id="inicio" class="hero">
+    <Navigation />
     <div class="hero-background">
       <div class="animated-gradient"></div>
       <div class="floating-shapes">
@@ -32,8 +33,13 @@
 </template>
 
 <script>
+import Navigation from './Navigation.vue'
+
 export default {
   name: 'Hero',
+  components: {
+    Navigation
+  },
   data() {
     return {
       roles: [
@@ -95,10 +101,9 @@ export default {
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   overflow: hidden;
-  padding: 2rem 0;
+  padding: 0;
 }
 
 .hero-background {
@@ -107,7 +112,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 1;
 }
 
 .animated-gradient {
@@ -192,8 +197,13 @@ export default {
 
 .container {
   position: relative;
-  z-index: 1;
+  z-index: 10;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 2rem 0;
 }
 
 .hero-content {

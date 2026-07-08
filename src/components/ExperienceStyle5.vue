@@ -1,7 +1,7 @@
 <template>
   <section id="experiencia" data-aos="fade-up">
     <div class="container">
-      <h2 data-aos="fade-up">Mi Roadmap Profesional</h2>
+      <h2 data-aos="fade-up">Algunos de mis logros</h2>
       <!-- <p class="subtitle">Grid Compacto Profesional</p> -->
       
       <!-- Compact Grid -->
@@ -131,10 +131,12 @@ export default {
         'Sistema de Fichaje con Reconocimiento Facial': 'fa-robot',
         'Circuito de Emails Automatizado': 'fa-envelope',
         'Optimización SEO y Posicionamiento': 'fa-magnifying-glass-chart',
+        'Optimización de Consultas N+1 con Django ORM': 'fa-bolt',
         'Integraciones Inmobiliarias': 'fa-building',
         'Embudo de Venta para Leads': 'fa-filter',
+        'Optimización de Imágenes con Pillow y Celery': 'fa-image',
+        'Optimización y Configuración Google Cloud': 'fa-cloud',
         'Formación de Personal': 'fa-chalkboard-user',
-        'Optimización y Configuración Google Cloud': 'fa-cloud'
       },
       companies: [
         {
@@ -159,11 +161,26 @@ export default {
           brandColor: '#ff2773',
           milestones: [
             { id: 1, title: 'Circuito de Emails Automatizado', description: 'Implementación completa de un sistema de email marketing automatizado con Brevo (anteriormente Sendinblue). Creación de flujos de trabajo personalizados para onboarding de usuarios, recordatorios de pago y comunicación con propietarios.', technologies: ['Brevo', 'Django', 'Celery'], images: ['brevo-portfolio.png'] },
-            { id: 2, title: 'Optimización SEO y Posicionamiento', description: 'Mejora integral del SEO técnico y de contenido, Optimización de Core Web Vitals, generación automática de sitemaps, y estrategia de contenido que resultó en un aumento del tráfico orgánico.', technologies: ['SEO', 'Google Analytics'], images: ['seo-portfolio.png'] },
-            { id: 3, title: 'Integraciones Inmobiliarias', description: 'Desarrollo de conectores API para sincronización automática de propiedades con los principales portales inmobiliarios: Fotocasa, Idealista, y Pisoscom. Sistema de sincronización bidireccional y gestión de inventario en tiempo real.', technologies: ['Django', 'Celery', 'REST APIs'], images: ['portales-portfolio.png'] },
-            { id: 4, title: 'Embudo de Venta para Leads', description: 'Diseño e implementación de un embudo de ventas automatizado para leads calientes. Notificaciones en tiempo real, y dashboard de seguimiento para el equipo de ventas.', technologies: ['Django', 'Vue.js'], images: ['embudo-portfolio.png'] },
-            { id: 5, title: 'Formación de Personal', description: 'Creación de programa de formación técnica para el equipo. Documentación de procesos, best practices y arquitectura del sistema.', technologies: ['Postman', 'Documentation'], images: ['postman-portfolio.png'] },
-            { id: 6, title: 'Optimización y Configuración Google Cloud', description: 'Arquitectura y optimización completa del entorno Google Cloud. Configuración de Cloud Run para orquestación de contenedores, implementación de Cloud Build para CI/CD automatizado, optimización de costes y recursos. Gestión de Cloud Storage para assets y backups.', technologies: ['Google Cloud Run', 'Cloud Build', 'Cloud Storage', 'Docker', 'CI/CD'], images: [] }
+            { id: 2, title: 'Optimización SEO y Posicionamiento', description: 'Mejora integral del SEO técnico y de contenido, Optimización de Core Web Vitals, generación automática de sitemaps, y estrategia de contenido que resultó en un aumento del tráfico orgánico.', technologies: ['SEO', 'Google Analytics', 'Vue.js'], images: ['seo-portfolio.png'] },
+            {
+              id: 3,
+              title: 'Optimización de Consultas N+1 con Django ORM',
+              description: 'Identificación y resolución del problema clásico N+1 en consultas a base de datos. Implementación de select_related() y prefetch_related() en las consultas principales de la aplicación, eliminando consultas redundantes. Refactorización de views y serializers para optimizar la carga de datos relacionados. Resultados: Mejora de 4x a 10x en tiempos de carga de vistas principales, eliminando llamadas innecesarias a la base de datos y optimizando el rendimiento general de la API.',
+              technologies: ['Django', 'PostgreSQL'],
+              images: []
+            },
+            { id: 4, title: 'Integraciones Inmobiliarias', description: 'Desarrollo de conectores API para sincronización automática de propiedades con los principales portales inmobiliarios: Fotocasa, Idealista, y Pisoscom. Sistema de sincronización bidireccional y gestión de inventario en tiempo real.', technologies: ['Django', 'Celery', 'REST APIs'], images: ['portales-portfolio.png'] },
+            { id: 5, title: 'Embudo de Venta para Leads', description: 'Diseño e implementación de un embudo de ventas automatizado para leads calientes. Notificaciones en tiempo real, y dashboard de seguimiento para el equipo de ventas.', technologies: ['Django', 'Vue.js'], images: ['embudo-portfolio.png'] },
+            {
+              id: 6,
+              title: 'Optimización de Imágenes con Pillow y Celery',
+              description: 'Implementación de sistema automatizado de optimización de imágenes utilizando Pillow para procesar imágenes subidas por usuarios. Generación automática de múltiples formatos (JPG y WebP) y versiones responsive (small, large) para diferentes tamaños de pantalla. Utilizando Celery para procesamiento asincrónico de imágenes sin bloquear la aplicación. Resultados: Reducción del peso total de imágenes en un 20% y mejora en tiempos de carga de hasta 40% gracias a la optimización de formatos y tamaños responsivos.',
+              technologies: ['Django', 'Pillow', 'Celery'],
+              images: []
+            },
+            { id: 7, title: 'Optimización y Configuración Google Cloud', description: 'Arquitectura y optimización completa del entorno Google Cloud. Configuración de Cloud Run para orquestación de contenedores, implementación de Cloud Build para CI/CD automatizado, optimización de costes y recursos. Gestión de Cloud Storage para assets y backups.', technologies: ['Google Cloud Run', 'Cloud Build', 'Cloud Storage', 'Docker', 'CI/CD'], images: [] },
+            { id: 8, title: 'Formación de Personal', description: 'Creación de programa de formación técnica para el equipo. Documentación de procesos, best practices y arquitectura del sistema.', technologies: ['Postman', 'Documentation'], images: ['postman-portfolio.png'] },
+
           ]
         }
       ]
