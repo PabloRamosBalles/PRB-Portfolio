@@ -118,7 +118,7 @@ export default {
     return {
       skillsGroup1: [
         { name: 'Python', icon: 'fa-code', color: '#3776ab' },
-        { name: 'Django', icon: 'fa-leaf', color: '#092e20' },
+        { name: 'Django', icon: 'fa-leaf', color: '#ff9500' },
         { name: 'PostgreSQL', icon: 'fa-database', color: '#336791' },
         { name: 'Docker', icon: 'fa-cube', color: '#2496ed' },
         { name: 'Redis', icon: 'fa-server', color: '#dc382d' },
@@ -138,7 +138,7 @@ export default {
         { name: 'Google Cloud Run', icon: 'fa-rocket', color: '#4285f4' },
         { name: 'Google Cloud Build', icon: 'fa-hammer', color: '#4285f4' },
         { name: 'Google Cloud Storage', icon: 'fa-floppy-disk', color: '#4285f4' },
-        { name: 'i18n', icon: 'fa-globe', color: '#1f2937' }
+        { name: 'i18n', icon: 'fa-globe', color: '#FE5B02' }
       ]
     }
   }

@@ -118,7 +118,7 @@ export default {
       showMilestoneModal: false,
       selectedMilestone: null,
       milestoneIcons: {
-        'Dashboard Power BI en Tiempo Real': 'fa-chart-line',
+        'Dashboards Power BI en Tiempo Real': 'fa-chart-line',
         'Data Warehouse PostgreSQL': 'fa-database',
         'Sistema de Fichaje con Reconocimiento Facial': 'fa-robot',
         'Circuito de Emails Automatizado': 'fa-envelope',
@@ -140,7 +140,7 @@ export default {
           milestones: [
             {
               id: 1,
-              title: 'Dashboard Power BI en Tiempo Real',
+              title: 'Dashboards Power BI en Tiempo Real',
               description: 'Desarrollo de informes interactivos con Power BI utilizando DAX para análisis de datos en tiempo real. Creación de visualizaciones para seguimiento de maquinaria, personal, suministros y costes operativos. Embedido de dashboards en la aplicación web principal.',
               technologies: ['Power BI', 'DAX', 'SQL', 'Data Analysis'],
               images: ['informe-powerBi.png']
@@ -350,6 +350,28 @@ export default {
       }
       
       path.setAttribute('d', pathData)
+      
+      // Agregar líneas verticales de borde al inicio y final
+      const startLine = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+      startLine.setAttribute('x1', '50')
+      startLine.setAttribute('y1', '75')
+      startLine.setAttribute('x2', '50')
+      startLine.setAttribute('y2', '275')
+      startLine.setAttribute('stroke', 'url(#gradient)')
+      startLine.setAttribute('stroke-width', '3')
+      startLine.setAttribute('stroke-linecap', 'round')
+      svg.appendChild(startLine)
+      
+      const endX = totalWidth - 50
+      const endLine = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+      endLine.setAttribute('x1', endX)
+      endLine.setAttribute('y1', '75')
+      endLine.setAttribute('x2', endX)
+      endLine.setAttribute('y2', '275')
+      endLine.setAttribute('stroke', 'url(#gradient)')
+      endLine.setAttribute('stroke-width', '3')
+      endLine.setAttribute('stroke-linecap', 'round')
+      svg.appendChild(endLine)
     }
   },
   mounted() {
@@ -552,6 +574,8 @@ h2 {
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
   border: 2px dashed;
   cursor: default;
+  position: relative;
+  z-index: 3;
 }
 
 .horizontal-card.continue-card:hover {

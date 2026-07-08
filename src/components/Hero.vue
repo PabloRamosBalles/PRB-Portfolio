@@ -22,10 +22,10 @@
           </h2>
         </div>
         <p class="subtitle" data-aos="fade-up" data-aos-delay="300">{{ subtitle }}</p>
-        <div class="hero-cta" data-aos="fade-up" data-aos-delay="500">
+        <!-- <div class="hero-cta" data-aos="fade-up" data-aos-delay="500">
           <a href="#experiencia" class="btn btn-primary">Ver mi experiencia</a>
-          <!-- <a href="#contacto" class="btn btn-secondary">Contactar</a> -->
-        </div>
+          <a href="#contacto" class="btn btn-secondary">Contactar</a>
+        </div> -->
       </div>
     </div>
   </section>
