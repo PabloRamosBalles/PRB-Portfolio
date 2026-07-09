@@ -61,6 +61,10 @@
               {{ errorMessage }}
             </div>
           </form>
+          <p class="contact-alternative">
+            O contacta conmigo vía 
+            <a href="https://www.linkedin.com/in/pablo-ramos-ballester-6424a0389/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </p>
         </div>
 
         <!-- Enlaces de contacto -->
@@ -278,6 +282,25 @@ export default {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.contact-alternative {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.contact-alternative a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.contact-alternative a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
 }
 
 .contact-links {
