@@ -48,7 +48,7 @@ export default {
         'Vue.js Developer',
         'Cloud Architect'
       ],
-      subtitle: 'Construyendo soluciones escalables con Python/Django y Vue.js',
+      subtitle: 'Construyendo soluciones escalables con Python/Django y Vue.js/Nuxt',
       displayedText: '',
       currentRoleIndex: 0,
       currentCharIndex: 0,
