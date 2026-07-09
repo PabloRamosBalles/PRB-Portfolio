@@ -10,12 +10,12 @@
   "dependencies": {
     "@splidejs/vue-splide": "^0.6.12",
     "@tsparticles/slim": "^4.3.0",
+    "@tsparticles/vue3": "^3.3.0",
     "aos": "^2.3.4",
     "lottie-web": "^5.13.0",
     "swiper": "^14.0.0",
     "vue": "^3.3.4",
-    "vue-typer": "^1.2.0",
-    "vue3-particles": "^2.12.0"
+    "vue-typer": "^1.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.4",
