@@ -10,6 +10,13 @@
   </div>
 </template>
 
+<style scoped>
+#app {
+  overflow-x: hidden;
+  width: 100%;
+}
+</style>
+
 <script>
 import Loading from './components/Loading.vue'
 import Hero from './components/Hero.vue'

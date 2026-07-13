@@ -146,9 +146,17 @@ export default {
 </script>
 
 <style scoped>
+#habilidades {
+  padding: 5rem 0;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .skills-slider {
   /* margin-bottom: 2rem; */
   overflow: hidden;
+  width: 100%;
 }
 
 .slider-container {

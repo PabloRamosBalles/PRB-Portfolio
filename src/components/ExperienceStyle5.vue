@@ -214,6 +214,8 @@ export default {
 <style scoped>
 #experiencia {
   padding: 5rem 0;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 h2 {
@@ -567,7 +569,7 @@ h2 {
 
 @media (max-width: 768px) {
   .compact-grid-timeline {
-    padding: 1rem;
+    padding: 0.5rem;
   }
   
   .company-banner {

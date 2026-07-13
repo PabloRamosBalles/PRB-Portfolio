@@ -168,6 +168,9 @@ export default {
   padding: 80px 0;
   background: var(--bg-color);
   transition: background 0.3s ease;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contact-content {

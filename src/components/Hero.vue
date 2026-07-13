@@ -104,6 +104,7 @@ export default {
   flex-direction: column;
   overflow: hidden;
   padding: 0;
+  width: 100%;
 }
 
 .hero-background {
@@ -364,10 +365,11 @@ export default {
 @media (max-width: 768px) {
   .hero {
     min-height: 100vh;
-    padding: 1rem 1.5rem;
+    padding: 1rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-x: hidden;
   }
 
   .hero-content {
