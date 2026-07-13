@@ -10,11 +10,11 @@
           <li><a href="#about" :class="{ active: activeSection === 'about' }" @click="mobileMenuOpen = false">Sobre mí</a></li>
           <li><a href="#contacto" :class="{ active: activeSection === 'contacto' }" @click="mobileMenuOpen = false">Contacto</a></li>
         </ul>
-        <button class="hamburger" @click="mobileMenuOpen = !mobileMenuOpen" :class="{ open: mobileMenuOpen }">
+        <!-- <button class="hamburger" @click="mobileMenuOpen = !mobileMenuOpen" :class="{ open: mobileMenuOpen }">
           <span></span>
           <span></span>
           <span></span>
-        </button>
+        </button> -->
         <!-- <button class="theme-toggle" @click="toggleTheme" :title="isDarkMode ? 'Modo claro' : 'Modo oscuro'">
           <span v-if="isDarkMode" class="icon">☀️</span>
           <span v-else class="icon">🌙</span>
