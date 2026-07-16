@@ -215,6 +215,10 @@ nav a.active {
 }
 
 @media (max-width: 768px) {
+  nav {
+    display: none;
+  }
+
   nav .container {
     position: relative;
     flex-wrap: wrap;

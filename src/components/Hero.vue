@@ -374,7 +374,7 @@ export default {
 
   .hero-content {
     max-width: 100%;
-    padding: 0;
+    padding: 0 1.5rem;
   }
 
   .greeting {
@@ -398,9 +398,10 @@ export default {
   
   .subtitle {
     font-size: 0.95rem;
-    padding: 1rem 1.25rem;
-    margin: 1.25rem 0 1.5rem;
+    padding: 1rem 1rem;
+    margin: 1.25rem auto 1.5rem;
     line-height: 1.6;
+    max-width: 90%;
   }
   
   .hero-cta {

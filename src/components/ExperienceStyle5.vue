@@ -51,12 +51,17 @@
               <div class="card-border" :style="{ backgroundColor: company.brandColor }"></div>
             </div>
           </div>
+          <!-- Click hint for mobile -->
+          <div class="click-hint" :style="{ color: company.brandColor }">
+            <i class="fas fa-hand-pointer"></i>
+            <span>Haz click en las cards para más información</span>
+          </div>
         </div>
         
         <!-- End Banner -->
         <div class="end-banner" data-aos="fade-up">
           <div class="end-content">
-            <i class="fas fa-infinity"></i>
+            <!-- <i class="fas fa-infinity"></i> -->
             <div>
               <h4>Continuará...</h4>
               <p>El roadmap sigue creciendo</p>
@@ -567,7 +572,50 @@ h2 {
   opacity: 0;
 }
 
+.click-hint {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  .click-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 8px;
+    border: 1px dashed currentColor;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.8;
+    animation: pulse-hint 2s ease-in-out infinite;
+  }
+
+  .click-hint i {
+    font-size: 1.1rem;
+    animation: bounce-hint 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-hint {
+    0%, 100% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes bounce-hint {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(4px);
+    }
+  }
+
   .compact-grid-timeline {
     padding: 0.5rem;
   }
