@@ -147,7 +147,7 @@ export default {
 
 <style scoped>
 #habilidades {
-  padding: 5rem 0;
+  padding: 2rem 0;
   overflow-x: hidden;
   width: 100%;
   box-sizing: border-box;

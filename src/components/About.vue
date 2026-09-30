@@ -28,7 +28,7 @@
             </div>
             <div class="about-card" data-aos="fade-up" data-aos-delay="350">
               <div class="card-icon"><i class="fas fa-film"></i></div>
-              <p class="card-text">Series addict con sentido de culpa</p>
+              <p class="card-text">Series addict con sentimiento de culpabilidad (me las fundo en un finde)</p>
             </div>
           </div>
         </div>

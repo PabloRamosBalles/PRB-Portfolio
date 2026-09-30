@@ -190,7 +190,7 @@ export default {
             {
               id: 6,
               title: 'Optimización de Imágenes con Pillow y Celery',
-              description: 'Implementación de sistema automatizado de optimización de imágenes utilizando Pillow para procesar imágenes subidas por usuarios. Generación automática de múltiples formatos (JPG y WebP) y versiones responsive (small, large) para diferentes tamaños de pantalla. Utilizando Celery para procesamiento asincrónico de imágenes sin bloquear la aplicación. Resultados: Reducción del peso total de imágenes en un 20% y mejora en tiempos de carga de hasta 40% gracias a la optimización de formatos y tamaños responsivos.',
+              description: 'Implementación de sistema automatizado de optimización de imágenes utilizando Pillow para procesar imágenes subidas por usuarios. Generación automática de múltiples formatos (JPG y WebP) y versiones responsive (small, large) para diferentes tamaños de pantalla. Utilizando Celery para procesamiento asincrónico de imágenes sin bloquear la aplicación. Resultados: Reducción del peso total de imágenes en un 30% y mejora en tiempos de carga de hasta 40% gracias a la optimización de formatos y tamaños responsivos.',
               technologies: ['Django', 'Pillow', 'Celery'],
               images: []
             },
@@ -232,6 +232,8 @@ export default {
   padding: 5rem 0;
   overflow-x: hidden;
   width: 100%;
+  background: rgba(102, 126, 234, 0.08);
+  transition: background 0.3s ease;
 }
 
 h2 {

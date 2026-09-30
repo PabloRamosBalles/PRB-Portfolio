@@ -400,9 +400,11 @@ export default {
 
 <style scoped>
 #experiencia {
-  padding: 5rem 0;
+  padding: 2rem 0;
   position: relative;
   overflow: hidden;
+  background: rgba(102, 126, 234, 0.08);
+  transition: background 0.3s ease;
 }
 
 h2 {
