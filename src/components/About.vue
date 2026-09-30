@@ -5,30 +5,45 @@
       
       <div class="about-content" data-aos="fade-up" data-aos-delay="200">
         <div class="about-text">
-          <p :class="['about-description', { expanded: isExpanded }]">
-Soy una persona apasionada por la tecnología y la innovación, siempre con curiosidad por aprender cosas nuevas y mejorar lo que ya existe. Tengo experiencia en desarrollo web y en el diseño de soluciones digitales, y me gusta enfocarme en crear proyectos que no solo funcionen bien, sino que también sean intuitivos, visualmente atractivos y ofrezcan una gran experiencia de usuario.
-
-Disfruto especialmente de transformar ideas en realidades digitales que aporten valor y tengan un impacto positivo en las personas y en los negocios. Me motiva ver cómo una idea sencilla puede evolucionar en algo útil, funcional y bien diseñado.
-
-Fuera del trabajo, me gusta mantener un estilo de vida activo y equilibrado. Disfruto viajar, especialmente si es con mi perro, descubrir nuevos lugares y desconectar de la rutina. También soy bastante de deporte. Creo mucho en la actitud positiva, en rodearse de buena energía y en afrontar los retos con ganas y optimismo, tanto en lo profesional como en lo personal.
-          </p>
-          <button v-if="!isExpanded" @click="toggleExpanded" class="btn-see-more">
-            Ver más
-          </button>
-          <button v-else @click="toggleExpanded" class="btn-see-more">
-            Ver menos
-          </button>
+          <div class="about-cards-grid">
+            <div class="about-card" data-aos="fade-up" data-aos-delay="100">
+              <div class="card-icon"><i class="fas fa-coffee"></i></div>
+              <p class="card-text">Semi adicto al café (el diagnóstico lo confirma)</p>
+            </div>
+            <div class="about-card" data-aos="fade-up" data-aos-delay="150">
+              <div class="card-icon"><i class="fas fa-gamepad"></i></div>
+              <p class="card-text">Gamer frustrado que piensa que juega bien</p>
+            </div>
+            <div class="about-card" data-aos="fade-up" data-aos-delay="200">
+              <div class="card-icon"><i class="fas fa-solid fa-futbol"></i></div>
+              <p class="card-text">Futbolista mediocre retirado (de forma involuntaria)</p>
+            </div>
+            <div class="about-card" data-aos="fade-up" data-aos-delay="250">
+              <div class="card-icon"><i class="fas fa-moon"></i></div>
+              <p class="card-text">Apasionado por los domingos disfuncionales</p>
+            </div>
+            <div class="about-card" data-aos="fade-up" data-aos-delay="300">
+              <div class="card-icon"><i class="fas fa-pizza-slice"></i></div>
+              <p class="card-text">Crítico de pizzerías (experiencia: 20+ años)</p>
+            </div>
+            <div class="about-card" data-aos="fade-up" data-aos-delay="350">
+              <div class="card-icon"><i class="fas fa-film"></i></div>
+              <p class="card-text">Series addict con sentido de culpa</p>
+            </div>
+          </div>
         </div>
 
         <div class="carousel-container">
           <div class="carousel">
-            <div class="carousel-slide">
-              <img 
-                :src="`/images/${images[currentImageIndex]}`" 
-                :alt="images[currentImageIndex]"
-                class="carousel-image"
-              />
-            </div>
+            <transition name="fade-image" mode="out-in">
+              <div class="carousel-slide" :key="currentImageIndex">
+                <img 
+                  :src="`/images/${images[currentImageIndex]}`" 
+                  :alt="images[currentImageIndex]"
+                  class="carousel-image"
+                />
+              </div>
+            </transition>
           </div>
 
           <div class="carousel-controls">
@@ -74,12 +89,10 @@ export default {
     return {
       images: [
         'vds-pablo.jpeg',
-        // 'profile-pablo.jpeg',
         'albania-pablo.jpeg',
         'about-pablo.jpeg'
       ],
-      currentImageIndex: 0,
-      isExpanded: false
+      currentImageIndex: 0
     }
   },
   methods: {
@@ -88,9 +101,6 @@ export default {
     },
     previousImage() {
       this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length
-    },
-    toggleExpanded() {
-      this.isExpanded = !this.isExpanded
     }
   }
 }
@@ -153,39 +163,50 @@ export default {
   justify-content: center;
 }
 
-.about-description {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: var(--text-secondary);
-  margin-bottom: 20px;
-  text-align: justify;
-  transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
-  max-height: 100%;
-  overflow: hidden;
+.about-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
 }
 
-.btn-see-more {
-  display: none;
-  align-self: flex-start;
-  padding: 10px 20px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: white;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+.about-card {
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
   transition: all 0.3s ease;
-  margin-top: 10px;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-.btn-see-more:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(253, 128, 29, 0.3);
+.about-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary-color);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
 }
 
-.btn-see-more:active {
-  transform: translateY(0);
+.card-icon {
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+}
+
+.card-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin: 0;
+  letter-spacing: 0.3px;
 }
 
 .carousel-container {
@@ -224,10 +245,25 @@ export default {
   }
 }
 
+/* Transición de imágenes suave */
+.fade-image-enter-active,
+.fade-image-leave-active {
+  transition: opacity 0.6s ease-in-out;
+}
+
+.fade-image-enter-from {
+  opacity: 0;
+}
+
+.fade-image-leave-to {
+  opacity: 0;
+}
+
 .carousel-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: opacity 0.6s ease-in-out;
 }
 
 .carousel-controls {
@@ -325,6 +361,22 @@ export default {
   box-shadow: 0 0 0 2px var(--card-bg), 0 0 0 4px var(--primary-color);
 }
 
+/* Dark Theme Styles */
+:global(.dark-theme) .about-card {
+  background: var(--card-bg);
+  border-color: rgba(96, 165, 250, 0.2);
+}
+
+:global(.dark-theme) .about-card:hover {
+  border-color: rgba(96, 165, 250, 0.6);
+  background: linear-gradient(135deg, #1a1f3a 0%, #141829 100%);
+  box-shadow: 0 12px 30px rgba(96, 165, 250, 0.2);
+}
+
+:global(.dark-theme) .card-text {
+  color: var(--text-primary);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .about {
@@ -340,17 +392,22 @@ export default {
     gap: 40px;
   }
 
-  .btn-see-more {
-    display: block;
+  .about-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
   }
 
-  .about-description {
-    text-align: left;
-    max-height: 120px;
+  .about-card {
+    padding: 20px;
   }
 
-  .about-description.expanded {
-    max-height: 1000px;
+  .card-icon {
+    font-size: 2rem;
+    height: 50px;
+  }
+
+  .card-text {
+    font-size: 0.95rem;
   }
 
   .carousel-btn {
@@ -372,6 +429,24 @@ export default {
   .section-title {
     font-size: 1.5rem;
     margin-bottom: 40px;
+  }
+
+  .about-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .about-card {
+    padding: 18px;
+  }
+
+  .card-icon {
+    font-size: 1.8rem;
+    height: 45px;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
   }
 
   .carousel-controls {

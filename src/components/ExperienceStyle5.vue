@@ -8,7 +8,12 @@
       <div class="compact-grid-timeline">
         <div v-for="company in companies" :key="company.id" class="company-group" data-aos="fade-up">
           <!-- Company Banner -->
-          <div class="company-banner" :style="{ borderLeftColor: company.brandColor }">
+          <div 
+            class="company-banner" 
+            :class="{ 'expanded': expandedCompanyId === company.id }"
+            :style="{ borderLeftColor: company.brandColor }"
+            @click="expandedCompanyId = expandedCompanyId === company.id ? null : company.id"
+          >
             <div class="banner-left">
               <div class="company-logo-compact" :style="{ background: company.id === 'live4life' ? 'white' : company.brandColor }">
                 <img :src="company.logo" :alt="company.name" />
@@ -25,49 +30,54 @@
               <span class="milestone-count" :style="{ backgroundColor: company.brandColor }">
                 {{ company.milestones.length }} proyectos
               </span>
+              <div class="expand-icon" :style="{ color: company.brandColor }">
+                <i class="fas" :class="expandedCompanyId === company.id ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </div>
             </div>
           </div>
           
-          <!-- Milestones Grid -->
-          <div class="milestones-grid">
-            <div v-for="(milestone, index) in company.milestones" 
-                 :key="milestone.id"
-                 class="milestone-compact-card"
-                 @click="openMilestoneModal({ ...milestone, brandColor: company.brandColor, milestoneIndex: index + 1 })"
-                 data-aos="fade-up"
-                 :data-aos-delay="index * 80">
-              <div class="card-number" :style="{ backgroundColor: company.brandColor }">
-                {{ index + 1 }}
+          <!-- Milestones Grid - Solo mostrar cuando está expandida -->
+          <transition name="expand">
+            <div v-if="expandedCompanyId === company.id" class="milestones-grid">
+              <div v-for="(milestone, index) in company.milestones" 
+                   :key="milestone.id"
+                   class="milestone-compact-card"
+                   @click="openMilestoneModal({ ...milestone, brandColor: company.brandColor, milestoneIndex: index + 1 })"
+                   data-aos="fade-up"
+                   :data-aos-delay="index * 80">
+                <div class="card-number" :style="{ backgroundColor: company.brandColor }">
+                  {{ index + 1 }}
+                </div>
+                <div class="card-icon">
+                  <i class="fas" :class="milestoneIcons[milestone.title]" :style="{ color: company.brandColor }"></i>
+                </div>
+                <h4>{{ milestone.title }}</h4>
+                <div class="tech-list">
+                  <span v-for="tech in milestone.technologies" :key="tech" :style="{ color: company.brandColor }">
+                    {{ tech }}
+                  </span>
+                </div>
+                <div class="card-border" :style="{ backgroundColor: company.brandColor }"></div>
               </div>
-              <div class="card-icon">
-                <i class="fas" :class="milestoneIcons[milestone.title]" :style="{ color: company.brandColor }"></i>
-              </div>
-              <h4>{{ milestone.title }}</h4>
-              <div class="tech-list">
-                <span v-for="tech in milestone.technologies" :key="tech" :style="{ color: company.brandColor }">
-                  {{ tech }}
-                </span>
-              </div>
-              <div class="card-border" :style="{ backgroundColor: company.brandColor }"></div>
             </div>
-          </div>
+          </transition>
           <!-- Click hint for mobile -->
-          <div class="click-hint" :style="{ color: company.brandColor }">
+          <div v-if="expandedCompanyId === company.id" class="click-hint" :style="{ color: company.brandColor }">
             <i class="fas fa-hand-pointer"></i>
             <span>Haz click en las cards para más información</span>
           </div>
         </div>
         
         <!-- End Banner -->
-        <div class="end-banner" data-aos="fade-up">
-          <div class="end-content">
+        <!-- <div class="end-banner" data-aos="fade-up">
+          <div class="end-content"> -->
             <!-- <i class="fas fa-infinity"></i> -->
-            <div>
+            <!-- <div>
               <h4>Continuará...</h4>
               <p>El roadmap sigue creciendo</p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
     </div>
@@ -130,6 +140,7 @@ export default {
       selectedImageTitle: '',
       showMilestoneModal: false,
       selectedMilestone: null,
+      expandedCompanyId: null, // Todas las secciones cerradas por defecto
       milestoneIcons: {
         'Dashboards Power BI en Tiempo Real': 'fa-chart-line',
         'Data Warehouse PostgreSQL': 'fa-database',
@@ -257,6 +268,18 @@ h2 {
   border-radius: 12px;
   margin-bottom: 2rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.company-banner:hover {
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  transform: translateX(4px);
+}
+
+.company-banner.expanded {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .banner-left {
@@ -320,10 +343,28 @@ h2 {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+.banner-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.expand-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.company-banner.expanded .expand-icon {
+  transform: rotate(180deg);
+}
+
 .milestones-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
+  animation: slideDown 0.3s ease-out;
 }
 
 .milestone-compact-card {
@@ -614,6 +655,33 @@ h2 {
     50% {
       transform: translateX(4px);
     }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Transiciones Vue */
+  .expand-enter-active,
+  .expand-leave-active {
+    transition: all 0.3s ease;
+  }
+
+  .expand-enter-from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  .expand-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 
   .compact-grid-timeline {

@@ -2,9 +2,9 @@
   <footer>
     <div class="container">
       <p>{{ message }}</p>
-      <p style="margin-top: 0.5rem; opacity: 0.8;">
+      <!-- <p style="margin-top: 0.5rem; opacity: 0.8;">
         Hecho con ❤️ usando Vue.js
-      </p>
+      </p> -->
     </div>
   </footer>
 </template>
