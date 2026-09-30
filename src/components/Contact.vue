@@ -93,6 +93,8 @@
 </template>
 
 <script>
+import emailjs from '@emailjs/browser'
+
 export default {
   name: 'Contact',
   data() {
@@ -134,6 +136,11 @@ export default {
       ]
     }
   },
+  mounted() {
+    // Inicializar EmailJS con tu Public Key
+    // Obtén tu Public Key en https://dashboard.emailjs.com/admin
+    emailjs.init('aWbX8SKSlBae78XIk') // ← REEMPLAZA ESTO
+  },
   methods: {
     async submitForm() {
       this.submitting = true
@@ -141,11 +148,20 @@ export default {
       this.errorMessage = ''
 
       try {
-        // Aquí irá la lógica para enviar el formulario
-        // Por ahora, simularemos el envío
-        await new Promise(resolve => setTimeout(resolve, 1500))
+        // Enviar email usando EmailJS
+        await emailjs.send(
+          'service_evu8bp5', // ← REEMPLAZA ESTO (Gmail, Outlook, etc.)
+          'template_esxeajm', // ← REEMPLAZA ESTO
+          {
+            to_email: 'pablo.ramos.balles@gmail.com', // ← REEMPLAZA CON TU EMAIL
+            from_name: this.form.name,
+            from_email: this.form.email,
+            subject: this.form.subject,
+            message: this.form.message
+          }
+        )
 
-        // Simular éxito
+        // Éxito
         this.successMessage = '✓ Mensaje enviado correctamente. ¡Gracias por contactarme!'
         this.form = { name: '', email: '', subject: '', message: '' }
 
@@ -154,6 +170,7 @@ export default {
           this.successMessage = ''
         }, 5000)
       } catch (error) {
+        console.error('Error al enviar email:', error)
         this.errorMessage = '✗ Error al enviar el mensaje. Por favor intenta más tarde.'
       } finally {
         this.submitting = false
