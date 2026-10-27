@@ -1,29 +1,17 @@
 <template>
-  <nav :class="{ 'dark-mode': isDarkMode, 'menu-open': mobileMenuOpen }">
-    <div class="container">
-      <div class="nav-wrapper">
-        <div class="nav-logo">
-          <h1>{{ name }}</h1>
-        </div>
-        
-        <div class="nav-content">
-          <ul class="nav-links" :class="{ open: mobileMenuOpen }">
-            <li><a href="#inicio" :class="{ active: activeSection === 'inicio' }" @click="mobileMenuOpen = false">Inicio</a></li>
-            <li><a href="#servicios" :class="{ active: activeSection === 'servicios' }" @click="mobileMenuOpen = false">Servicios</a></li>
-            <li><a href="#experiencia" :class="{ active: activeSection === 'experiencia' }" @click="mobileMenuOpen = false">Experiencia</a></li>
-            <li><a href="#habilidades" :class="{ active: activeSection === 'habilidades' }" @click="mobileMenuOpen = false">Habilidades</a></li>
-            <li><a href="#about" :class="{ active: activeSection === 'about' }" @click="mobileMenuOpen = false">Sobre mí</a></li>
-            <li><a href="#contacto" :class="{ active: activeSection === 'contacto' }" @click="mobileMenuOpen = false">Contacto</a></li>
-          </ul>
-        </div>
+  <nav class="nav" :class="{ scrolled }">
+    <a href="#inicio" class="nav-logo" aria-label="Inicio">
+      <span class="logo-mark">PR</span>
+      <span class="logo-name">Pablo Ramos</span>
+    </a>
 
-        <button class="hamburger" @click="mobileMenuOpen = !mobileMenuOpen" :class="{ open: mobileMenuOpen }" aria-label="Menú">
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-          <span class="hamburger-line"></span>
-        </button>
-      </div>
-    </div>
+    <ul class="nav-links">
+      <li v-for="link in links" :key="link.id">
+        <a :href="`#${link.id}`" :class="{ active: activeSection === link.id }">{{ link.label }}</a>
+      </li>
+    </ul>
+
+    <a href="#contacto" class="nav-cta">Hablemos</a>
   </nav>
 </template>
 
@@ -32,70 +20,36 @@ export default {
   name: 'Navigation',
   data() {
     return {
-      name: '',
       activeSection: 'inicio',
-      isDarkMode: false,
-      mobileMenuOpen: false
+      scrolled: false,
+      links: [
+        { id: 'servicios', label: 'Proceso' },
+        { id: 'experiencia', label: 'Experiencia' },
+        { id: 'habilidades', label: 'Stack' },
+        { id: 'about', label: 'Sobre mí' }
+      ]
     }
   },
   mounted() {
-    // Cargar tema guardado
-    const savedTheme = localStorage.getItem('theme') || 'light'
-    this.isDarkMode = savedTheme === 'dark'
-    this.applyTheme()
-
-    // Escuchar scroll para activar sección
-    window.addEventListener('scroll', this.handleScroll)
-
-    // Escuchar cambios de tema desde otros componentes
-    window.addEventListener('themeChange', this.handleThemeChange)
-    
-    // Cerrar menú móvil al hacer click afuera
-    document.addEventListener('click', this.handleDocumentClick)
+    window.addEventListener('scroll', this.handleScroll, { passive: true })
+    this.handleScroll()
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
-    window.removeEventListener('themeChange', this.handleThemeChange)
-    document.removeEventListener('click', this.handleDocumentClick)
   },
   methods: {
     handleScroll() {
+      this.scrolled = window.scrollY > 24
       const sections = ['inicio', 'servicios', 'experiencia', 'habilidades', 'about', 'contacto']
       for (const section of sections) {
         const element = document.getElementById(section)
         if (element) {
           const rect = element.getBoundingClientRect()
-          if (rect.top <= 100 && rect.bottom >= 100) {
+          if (rect.top <= 120 && rect.bottom >= 120) {
             this.activeSection = section
             break
           }
         }
-      }
-    },
-    toggleTheme() {
-      this.isDarkMode = !this.isDarkMode
-      this.applyTheme()
-      localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light')
-      
-      // Emitir evento para otros componentes
-      window.dispatchEvent(new CustomEvent('themeChange', { 
-        detail: { isDarkMode: this.isDarkMode } 
-      }))
-    },
-    applyTheme() {
-      if (this.isDarkMode) {
-        document.documentElement.classList.add('dark-theme')
-      } else {
-        document.documentElement.classList.remove('dark-theme')
-      }
-    },
-    handleThemeChange(event) {
-      this.isDarkMode = event.detail.isDarkMode
-    },
-    handleDocumentClick(event) {
-      const nav = this.$el
-      if (nav && !nav.contains(event.target)) {
-        this.mobileMenuOpen = false
       }
     }
   }
@@ -103,24 +57,107 @@ export default {
 </script>
 
 <style scoped>
-/* Los estilos principales están en src/style.css */
-/* Estilos scoped específicos del componente */
+.nav {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  width: min(1100px, calc(100% - 32px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 8px 8px 8px 14px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.nav.scrolled {
+  background: rgba(17, 17, 19, 0.72);
+  border-color: var(--line);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.logo-name {
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
 
 .nav-links {
   display: flex;
+  list-style: none;
+  gap: 4px;
 }
 
-@media (max-width: 768px) {
-  .nav-content {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-  }
+.nav-links a {
+  display: block;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease, background 0.2s ease;
+}
 
-  .nav-links {
-    width: 100%;
+.nav-links a:hover {
+  color: var(--text);
+}
+
+.nav-links a.active {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-cta {
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.nav-cta:hover {
+  background: var(--accent);
+}
+
+@media (max-width: 960px) {
+  .logo-name {
+    display: none;
+  }
+}
+
+/* Sin barra de navegación en móvil */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
   }
 }
 </style>

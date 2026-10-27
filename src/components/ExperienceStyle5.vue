@@ -1,102 +1,97 @@
 <template>
-  <section id="experiencia" data-aos="fade-up">
+  <section id="experiencia">
     <div class="container">
-      <h2 data-aos="fade-up">Algunos de mis logros</h2>
-      <!-- <p class="subtitle">Grid Compacto Profesional</p> -->
-      
-      <!-- Compact Grid -->
-      <div class="compact-grid-timeline">
-        <div v-for="company in companies" :key="company.id" class="company-group" data-aos="fade-up">
-          <!-- Company Banner -->
-          <div 
-            class="company-banner" 
-            :class="{ 'expanded': expandedCompanyId === company.id }"
-            :style="{ borderLeftColor: company.brandColor }"
+      <header class="section-head" data-aos="fade-up">
+        <span class="eyebrow"><b>02</b> / Experiencia</span>
+        <div>
+          <h2 class="section-title">Algunos de mis logros</h2>
+          <p class="section-lead">Proyectos reales en empresa. Abre una y pulsa en cualquier logro para ver el detalle.</p>
+        </div>
+      </header>
+
+      <div class="companies">
+        <article
+          v-for="(company, companyIndex) in companies"
+          :key="company.id"
+          class="company"
+          :class="{ expanded: expandedCompanyId === company.id }"
+          :style="{ '--brand': company.brandColor }"
+          data-aos="fade-up"
+        >
+          <button
+            class="company-row"
+            :aria-expanded="expandedCompanyId === company.id"
             @click="expandedCompanyId = expandedCompanyId === company.id ? null : company.id"
           >
-            <div class="banner-left">
-              <div class="company-logo-compact" :style="{ background: company.id === 'live4life' ? 'white' : company.brandColor }">
-                <img :src="company.logo" :alt="company.name" />
-              </div>
-              <div>
-                <div class="company-header">
-                  <h3 :style="{ color: company.brandColor }">{{ company.name }}</h3>
-                  <span class="company-category" :style="{ backgroundColor: company.brandColor }">{{ company.category }}</span>
-                </div>
-                <p class="position-compact">{{ company.position }}</p>
-              </div>
-            </div>
-            <div class="banner-right">
-              <span class="milestone-count" :style="{ backgroundColor: company.brandColor }">
-                {{ company.milestones.length }} proyectos
+            <span class="company-index">{{ pad(companyIndex + 1) }}</span>
+
+            <span class="company-logo" :class="{ 'logo-light': company.id === 'live4life' }">
+              <img :src="company.logo" :alt="company.name" />
+            </span>
+
+            <span class="company-info">
+              <span class="company-header">
+                <span class="company-name">{{ company.name }}</span>
+                <span class="company-category">{{ company.category }}</span>
               </span>
-              <div class="expand-icon" :style="{ color: company.brandColor }">
-                <i class="fas" :class="expandedCompanyId === company.id ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Milestones Grid - Solo mostrar cuando está expandida -->
+              <span class="company-position">{{ company.position }}</span>
+            </span>
+
+            <span class="company-count">{{ company.milestones.length }} logros</span>
+
+            <span class="company-toggle" aria-hidden="true">
+              <i class="fas fa-plus"></i>
+            </span>
+          </button>
+
           <transition name="expand">
-            <div v-if="expandedCompanyId === company.id" class="milestones-grid">
-              <div v-for="(milestone, index) in company.milestones" 
-                   :key="milestone.id"
-                   class="milestone-compact-card"
-                   @click="openMilestoneModal({ ...milestone, brandColor: company.brandColor, milestoneIndex: index + 1 })"
-                   data-aos="fade-up"
-                   :data-aos-delay="index * 80">
-                <div class="card-number" :style="{ backgroundColor: company.brandColor }">
-                  {{ index + 1 }}
-                </div>
-                <div class="card-icon">
-                  <i class="fas" :class="milestoneIcons[milestone.title]" :style="{ color: company.brandColor }"></i>
-                </div>
-                <h4>{{ milestone.title }}</h4>
-                <div class="tech-list">
-                  <span v-for="tech in milestone.technologies" :key="tech" :style="{ color: company.brandColor }">
-                    {{ tech }}
-                  </span>
-                </div>
-                <div class="card-border" :style="{ backgroundColor: company.brandColor }"></div>
-              </div>
+            <div v-if="expandedCompanyId === company.id" class="milestones">
+              <button
+                v-for="(milestone, index) in company.milestones"
+                :key="milestone.id"
+                class="milestone"
+                @click="openMilestoneModal({ ...milestone, brandColor: company.brandColor, milestoneIndex: index + 1 })"
+              >
+                <span class="milestone-top">
+                  <i class="fas milestone-icon" :class="milestoneIcons[milestone.title]"></i>
+                  <span class="milestone-index">{{ pad(index + 1) }}</span>
+                </span>
+                <span class="milestone-title">{{ milestone.title }}</span>
+                <span class="milestone-tech">
+                  <span v-for="tech in milestone.technologies" :key="tech">{{ tech }}</span>
+                </span>
+                <span class="milestone-more">
+                  Ver detalle <i class="fas fa-arrow-right"></i>
+                </span>
+              </button>
             </div>
           </transition>
-          <!-- Click hint for mobile -->
-          <div v-if="expandedCompanyId === company.id" class="click-hint" :style="{ color: company.brandColor }">
-            <i class="fas fa-hand-pointer"></i>
-            <span>Haz click en las cards para más información</span>
-          </div>
-        </div>
-        
-        <!-- End Banner -->
-        <!-- <div class="end-banner" data-aos="fade-up">
-          <div class="end-content"> -->
-            <!-- <i class="fas fa-infinity"></i> -->
-            <!-- <div>
-              <h4>Continuará...</h4>
-              <p>El roadmap sigue creciendo</p>
-            </div>
-          </div>
-        </div> -->
+        </article>
       </div>
-
     </div>
-    
+
     <!-- Modals with Teleport -->
     <teleport to="body">
       <transition name="modal-fade">
         <div v-if="showMilestoneModal" class="milestone-modal" @click="closeMilestoneModal">
-          <div class="modal-content" @click.stop>
-            <button class="modal-close" @click="closeMilestoneModal">×</button>
+          <div class="modal-content" :style="{ '--brand': selectedMilestone?.brandColor }" @click.stop>
+            <button class="modal-close" @click="closeMilestoneModal" aria-label="Cerrar">
+              <i class="fas fa-xmark"></i>
+            </button>
             <div class="milestone-modal-header">
-              <i class="fas milestone-modal-icon" :class="milestoneIcons[selectedMilestone?.title]" :style="{ color: selectedMilestone?.brandColor }"></i>
-              <h3>{{ selectedMilestone?.title }}</h3>
+              <span class="modal-icon">
+                <i class="fas" :class="milestoneIcons[selectedMilestone?.title]"></i>
+              </span>
+              <div>
+                <span class="modal-kicker">Logro {{ pad(selectedMilestone?.milestoneIndex || 0) }}</span>
+                <h3>{{ selectedMilestone?.title }}</h3>
+              </div>
             </div>
             <p class="milestone-modal-description">{{ selectedMilestone?.description }}</p>
-            
+
             <div v-if="selectedMilestone?.images && selectedMilestone.images.length > 0" class="milestone-modal-images">
-              <img 
-                v-for="(image, imgIndex) in selectedMilestone.images" 
+              <img
+                v-for="(image, imgIndex) in selectedMilestone.images"
                 :key="imgIndex"
                 :src="`/images/${image}`"
                 :alt="`${selectedMilestone.title} - imagen ${imgIndex + 1}`"
@@ -104,29 +99,26 @@
                 @click.stop="openImageModal(`/images/${image}`, selectedMilestone.title)"
               />
             </div>
-            
+
             <div class="technologies">
-              <span v-for="tech in selectedMilestone?.technologies" :key="tech" class="tech-badge-modal" :style="{ backgroundColor: `${selectedMilestone?.brandColor}20`, color: selectedMilestone?.brandColor }">
-                {{ tech }}
-              </span>
+              <span v-for="tech in selectedMilestone?.technologies" :key="tech" class="tag">{{ tech }}</span>
             </div>
           </div>
         </div>
       </transition>
-      
+
       <transition name="modal-fade">
         <div v-if="showImageModal" class="image-modal" @click="closeImageModal">
-          <div class="modal-content" @click.stop>
-            <button class="modal-close" @click="closeImageModal">×</button>
-            <div class="modal-image-container">
-              <img :src="selectedImage" :alt="selectedImageTitle" class="modal-image" />
-            </div>
+          <div class="modal-content modal-content-image" @click.stop>
+            <button class="modal-close" @click="closeImageModal" aria-label="Cerrar">
+              <i class="fas fa-xmark"></i>
+            </button>
+            <img :src="selectedImage" :alt="selectedImageTitle" class="modal-image" />
             <p class="modal-title">{{ selectedImageTitle }}</p>
           </div>
         </div>
       </transition>
     </teleport>
-    <!-- </div> -->
   </section>
 </template>
 
@@ -203,6 +195,9 @@ export default {
     }
   },
   methods: {
+    pad(n) {
+      return String(n).padStart(2, '0')
+    },
     openMilestoneModal(milestone) {
       this.selectedMilestone = milestone
       this.showMilestoneModal = true
@@ -228,484 +223,444 @@ export default {
 </script>
 
 <style scoped>
-#experiencia {
-  padding: 5rem 0;
-  overflow-x: hidden;
+/* ---------- Filas de empresa ---------- */
+.companies {
+  border-top: 1px solid var(--line);
+}
+
+.company {
+  border-bottom: 1px solid var(--line);
+}
+
+.company-row {
+  position: relative;
   width: 100%;
-  background: rgba(102, 126, 234, 0.08);
-  transition: background 0.3s ease;
-}
-
-h2 {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  color: #000000;
-}
-
-.subtitle {
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  margin-bottom: 4rem;
-}
-
-.compact-grid-timeline {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.company-group {
-  margin-bottom: 4rem;
-}
-
-.company-banner {
-  display: flex;
+  display: grid;
+  grid-template-columns: 48px 56px 1fr auto 40px;
   align-items: center;
-  justify-content: space-between;
-  background: rgba(255, 255, 255, 0.03);
-  border-left: 6px solid;
-  padding: 1.5rem 2rem;
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  gap: 24px;
+  padding: 28px 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.company-banner:hover {
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-  transform: translateX(4px);
+/* Línea de color de marca que crece al pasar por encima */
+.company-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
 }
 
-.company-banner.expanded {
-  background: rgba(255, 255, 255, 0.08);
+.company-row:hover::before,
+.company.expanded .company-row::before {
+  transform: scaleX(1);
 }
 
-.banner-left {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+.company-index {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-faint);
 }
 
-.company-logo-compact {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.company-logo {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
   padding: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  background: var(--brand);
 }
 
-.company-logo-compact img {
+.company-logo.logo-light {
+  background: #ffffff;
+}
+
+.company-logo img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 50%;
+  border-radius: 6px;
 }
 
-.company-banner h3 {
-  font-size: 1.8rem;
-  margin: 0;
-}
-
-.position-compact {
-  margin: 0.3rem 0 0;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
+.company-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
 }
 
 .company-header {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 12px;
+}
+
+.company-name {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+.company-row:hover .company-name,
+.company.expanded .company-name {
+  color: var(--brand);
 }
 
 .company-category {
-  display: inline-block;
-  padding: 0.3rem 0.8rem;
-  border-radius: 12px;
-  color: white;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--brand);
+  color: var(--brand);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
   text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-.milestone-count {
-  padding: 0.5rem 1.2rem;
-  border-radius: 20px;
-  color: white;
-  font-weight: 600;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+.company-position {
+  font-size: 0.95rem;
+  color: var(--text-muted);
 }
 
-.banner-right {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+.company-count {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
-.expand-icon {
-  font-size: 1.2rem;
-  transition: transform 0.3s ease;
-  display: flex;
-  align-items: center;
-}
-
-.company-banner.expanded .expand-icon {
-  transform: rotate(180deg);
-}
-
-.milestones-grid {
+.company-toggle {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  animation: slideDown 0.3s ease-out;
-}
-
-.milestone-compact-card {
-  position: relative;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
-  padding: 1.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.milestone-compact-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.card-number {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 35px;
-  height: 35px;
+  place-items: center;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  transition: transform 0.4s var(--ease), background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.company.expanded .company-toggle {
+  transform: rotate(45deg);
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #0a0a0b;
+}
+
+/* ---------- Rejilla de logros con líneas finas ---------- */
+.milestones {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1px;
+  margin: 0 0 32px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.milestone {
+  position: relative;
   display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 220px;
+  padding: 24px;
+  background: var(--bg);
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.milestone:hover {
+  background: var(--bg-elev);
+}
+
+.milestone-top {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  font-size: 1rem;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
-.card-icon {
-  margin-bottom: 1rem;
+.milestone-icon {
+  font-size: 1.15rem;
+  color: var(--brand);
 }
 
-.card-icon i {
-  font-size: 2.5rem;
+.milestone-index {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-faint);
 }
 
-.milestone-compact-card h4 {
-  font-size: 1.1rem;
-  color: var(--primary-color);
-  margin-bottom: 1rem;
-  line-height: 1.3;
-  min-height: 2.6rem;
+.milestone-title {
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  flex: 1;
 }
 
-.tech-list {
+.milestone-tech {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
 }
 
-.tech-list span {
-  padding: 0.3rem 0.7rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  font-size: 0.7rem;
-  font-weight: 600;
-}
-
-.card-border {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  border-radius: 0 0 12px 12px;
-}
-
-.end-banner {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
-  border-radius: 12px;
-  padding: 2rem;
-  text-align: center;
-  border: 2px dashed #667eea;
-}
-
-.end-content {
-  display: flex;
+.milestone-more {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--brand);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s ease, transform 0.3s var(--ease);
 }
 
-.end-content i {
-  font-size: 3rem;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.milestone-more i {
+  font-size: 0.75em;
 }
 
-.end-content h4 {
-  font-size: 1.8rem;
-  margin: 0;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.milestone:hover .milestone-more {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.end-content p {
-  margin: 0.3rem 0 0;
-  color: var(--text-secondary);
+.expand-enter-active,
+.expand-leave-active {
+  transition: opacity 0.35s ease, transform 0.35s var(--ease);
 }
 
-/* Modal styles */
+.expand-enter-from,
+.expand-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* ---------- Modales ---------- */
 .milestone-modal,
 .image-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  inset: 0;
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(8px);
-  padding: 1rem;
-  box-sizing: border-box;
-  overflow: hidden;
+  padding: 16px;
+  background: rgba(5, 5, 6, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .modal-content {
   position: relative;
-  background-color: var(--card-bg);
-  padding: 2rem;
-  border-radius: 16px;
-  max-width: 700px;
   width: 100%;
-  max-height: calc(100vh - 2rem);
+  max-width: 720px;
+  max-height: calc(100vh - 32px);
   overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  flex-shrink: 0;
+  padding: 36px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line-strong);
+  border-top: 3px solid var(--brand, var(--accent));
+  border-radius: var(--radius);
+  color: var(--text);
 }
 
 .modal-close {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(0, 0, 0, 0.2);
-  border: none;
-  font-size: 2rem;
-  color: white;
-  cursor: pointer;
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .modal-close:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: rotate(90deg);
+  background: var(--text);
+  color: var(--bg);
 }
 
 .milestone-modal-header {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
+  gap: 18px;
+  margin-bottom: 20px;
+  padding-right: 40px;
 }
 
-.milestone-modal-icon {
-  font-size: 3rem;
+.modal-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--brand);
+  color: #0a0a0b;
+  font-size: 1.3rem;
+}
+
+.modal-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
 
 .milestone-modal-header h3 {
-  font-size: 1.8rem;
-  color: var(--primary-color);
-  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 .milestone-modal-description {
-  color: var(--text-secondary);
-  margin-bottom: 1.5rem;
-  line-height: 1.7;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: 24px;
 }
 
 .milestone-modal-images {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .milestone-modal-img {
   width: 100%;
-  max-height: 300px;
-  border-radius: 12px;
+  max-height: 320px;
   object-fit: cover;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  cursor: zoom-in;
+  transition: opacity 0.2s ease;
 }
 
 .milestone-modal-img:hover {
-  transform: scale(1.03);
+  opacity: 0.85;
 }
 
 .technologies {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
-.tech-badge-modal {
-  padding: 0.4rem 0.8rem;
-  border-radius: 16px;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.modal-image-container {
-  max-height: 75vh;
-  margin-bottom: 1rem;
+.modal-content-image {
+  max-width: 1100px;
+  border-top-width: 1px;
+  padding: 20px;
 }
 
 .modal-image {
-  max-width: 100%;
+  width: 100%;
   max-height: 75vh;
-  border-radius: 12px;
   object-fit: contain;
+  border-radius: 8px;
 }
 
 .modal-title {
-  color: var(--primary-color);
-  font-size: 1.2rem;
-  font-weight: 600;
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
   text-align: center;
-  margin: 0;
 }
 
-.modal-fade-enter-active, .modal-fade-leave-active {
+.modal-fade-enter-active,
+.modal-fade-leave-active {
   transition: opacity 0.3s ease;
 }
 
-.modal-fade-enter-from, .modal-fade-leave-to {
+.modal-fade-enter-from,
+.modal-fade-leave-to {
   opacity: 0;
 }
 
-.click-hint {
-  display: none;
-}
-
+/* ---------- Responsive ---------- */
 @media (max-width: 768px) {
-  .click-hint {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background: rgba(102, 126, 234, 0.05);
-    border-radius: 8px;
-    border: 1px dashed currentColor;
-    font-size: 0.9rem;
-    font-weight: 500;
-    opacity: 0.8;
-    animation: pulse-hint 2s ease-in-out infinite;
+  .company-row {
+    grid-template-columns: 48px 1fr 36px;
+    gap: 14px;
+    padding: 22px 0;
   }
 
-  .click-hint i {
-    font-size: 1.1rem;
-    animation: bounce-hint 1.5s ease-in-out infinite;
+  .company-index,
+  .company-count {
+    display: none;
   }
 
-  @keyframes pulse-hint {
-    0%, 100% {
-      opacity: 0.8;
-    }
-    50% {
-      opacity: 1;
-    }
+  .company-logo {
+    width: 48px;
+    height: 48px;
   }
 
-  @keyframes bounce-hint {
-    0%, 100% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(4px);
-    }
-  }
-
-  @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Transiciones Vue */
-  .expand-enter-active,
-  .expand-leave-active {
-    transition: all 0.3s ease;
-  }
-
-  .expand-enter-from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  .expand-leave-to {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-
-  .compact-grid-timeline {
-    padding: 0.5rem;
-  }
-  
-  .company-banner {
+  /* El sector va debajo del nombre en móvil */
+  .company-header {
     flex-direction: column;
-    text-align: center;
-    gap: 1rem;
+    align-items: flex-start;
+    gap: 6px;
   }
-  
-  .banner-left {
-    flex-direction: column;
+
+  .company-position {
+    font-size: 0.85rem;
   }
-  
-  .milestones-grid {
+
+  .company-toggle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .milestones {
     grid-template-columns: 1fr;
+    margin-bottom: 24px;
   }
-  
-  .end-content {
-    flex-direction: column;
+
+  .milestone {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  /* En táctil no hay hover: el enlace se ve siempre */
+  .milestone-more {
+    opacity: 1;
+    transform: none;
+  }
+
+  .modal-content {
+    padding: 28px 22px;
+  }
+
+  .milestone-modal-header h3 {
+    font-size: 1.3rem;
   }
 }
 </style>

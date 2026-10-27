@@ -1,82 +1,52 @@
 <template>
   <section id="about" class="about">
     <div class="container">
-      <h2 class="section-title" data-aos="fade-up">Sobre mí</h2>
-      
-      <div class="about-content" data-aos="fade-up" data-aos-delay="200">
-        <div class="about-text">
-          <div class="about-cards-grid">
-            <div class="about-card" data-aos="fade-up" data-aos-delay="100">
-              <div class="card-icon"><i class="fas fa-coffee"></i></div>
-              <p class="card-text">Semi adicto al café (el diagnóstico lo confirma)</p>
-            </div>
-            <div class="about-card" data-aos="fade-up" data-aos-delay="150">
-              <div class="card-icon"><i class="fas fa-gamepad"></i></div>
-              <p class="card-text">Gamer frustrado que piensa que juega bien</p>
-            </div>
-            <div class="about-card" data-aos="fade-up" data-aos-delay="200">
-              <div class="card-icon"><i class="fas fa-solid fa-futbol"></i></div>
-              <p class="card-text">Futbolista mediocre retirado (de forma involuntaria)</p>
-            </div>
-            <div class="about-card" data-aos="fade-up" data-aos-delay="250">
-              <div class="card-icon"><i class="fas fa-moon"></i></div>
-              <p class="card-text">Apasionado por los domingos disfuncionales</p>
-            </div>
-            <div class="about-card" data-aos="fade-up" data-aos-delay="300">
-              <div class="card-icon"><i class="fas fa-pizza-slice"></i></div>
-              <p class="card-text">Crítico de pizzerías (experiencia: 20+ años)</p>
-            </div>
-            <div class="about-card" data-aos="fade-up" data-aos-delay="350">
-              <div class="card-icon"><i class="fas fa-film"></i></div>
-              <p class="card-text">Series addict con sentimiento de culpabilidad (me las fundo en un finde)</p>
+      <header class="section-head" data-aos="fade-up">
+        <span class="eyebrow"><b>04</b> / Sobre mí</span>
+        <div>
+          <h2 class="section-title">Sobre mí</h2>
+          <p class="section-lead">Fuera del código también hay vida. Más o menos.</p>
+        </div>
+      </header>
+
+      <div class="about-bento">
+        <!-- Foto con controles superpuestos -->
+        <div class="photo-tile" data-aos="fade-up">
+          <transition name="fade-image" mode="out-in">
+            <img
+              :key="currentImageIndex"
+              :src="`/images/${images[currentImageIndex]}`"
+              :alt="`Foto de Pablo ${currentImageIndex + 1}`"
+              class="photo"
+            />
+          </transition>
+
+          <div class="photo-controls">
+            <span class="photo-counter">{{ currentImageIndex + 1 }} / {{ images.length }}</span>
+            <div class="photo-buttons">
+              <button @click="previousImage" class="photo-btn" aria-label="Imagen anterior">
+                <i class="fas fa-arrow-left"></i>
+              </button>
+              <button @click="nextImage" class="photo-btn" aria-label="Siguiente imagen">
+                <i class="fas fa-arrow-right"></i>
+              </button>
             </div>
           </div>
         </div>
 
-        <div class="carousel-container">
-          <div class="carousel">
-            <transition name="fade-image" mode="out-in">
-              <div class="carousel-slide" :key="currentImageIndex">
-                <img 
-                  :src="`/images/${images[currentImageIndex]}`" 
-                  :alt="images[currentImageIndex]"
-                  class="carousel-image"
-                />
-              </div>
-            </transition>
-          </div>
-
-          <div class="carousel-controls">
-            <button @click="previousImage" class="carousel-btn carousel-btn-prev" aria-label="Imagen anterior">
-              <span>❮</span>
-            </button>
-            
-            <div class="carousel-dots">
-              <button 
-                v-for="(image, index) in images" 
-                :key="index"
-                @click="currentImageIndex = index"
-                :class="['dot', { active: index === currentImageIndex }]"
-                :aria-label="`Ir a imagen ${index + 1}`"
-              ></button>
-            </div>
-
-            <button @click="nextImage" class="carousel-btn carousel-btn-next" aria-label="Siguiente imagen">
-              <span>❯</span>
-            </button>
-          </div>
-
-          <!-- <div class="carousel-thumbnails">
-            <button 
-              v-for="(image, index) in images"
-              :key="index"
-              @click="currentImageIndex = index"
-              :class="['thumbnail', { active: index === currentImageIndex }]"
-            >
-              <img :src="`/images/${image}`" :alt="`Miniatura ${index + 1}`" />
-            </button>
-          </div> -->
-        </div>
+        <!-- Datos curiosos -->
+        <ul class="about-text">
+          <li
+            v-for="(fact, index) in facts"
+            :key="fact.text"
+            class="about-card"
+            data-aos="fade-up"
+            :data-aos-delay="index * 60"
+          >
+            <span class="card-icon"><i class="fas" :class="fact.icon"></i></span>
+            <p class="card-text">{{ fact.text }}</p>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -92,7 +62,15 @@ export default {
         'albania-pablo.jpeg',
         'about-pablo.jpeg'
       ],
-      currentImageIndex: 0
+      currentImageIndex: 0,
+      facts: [
+        { icon: 'fa-mug-hot', text: 'Semi adicto al café (el diagnóstico lo confirma)' },
+        { icon: 'fa-gamepad', text: 'Gamer frustrado que piensa que juega bien' },
+        { icon: 'fa-futbol', text: 'Futbolista mediocre retirado (de forma involuntaria)' },
+        { icon: 'fa-moon', text: 'Apasionado por los domingos disfuncionales' },
+        { icon: 'fa-pizza-slice', text: 'Crítico de pizzerías (experiencia: 20+ años)' },
+        { icon: 'fa-film', text: 'Series addict con sentimiento de culpabilidad (me las fundo en un finde)' }
+      ]
     }
   },
   methods: {
@@ -107,360 +85,178 @@ export default {
 </script>
 
 <style scoped>
-.about {
-  padding: 80px 0;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  box-sizing: border-box;
+.about-bento {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 16px;
 }
 
-.about::before {
-  content: '';
+/* ---------- Foto ---------- */
+.photo-tile {
+  position: relative;
+  min-height: 520px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+}
+
+.photo {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(253, 128, 29, 0.08) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.section-title {
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 60px;
-  color: var(--text-primary);
-  position: relative;
-  z-index: 1;
-}
-
-.section-title::after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  margin: 20px auto 0;
-  border-radius: 2px;
-}
-
-.about-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-  position: relative;
-  z-index: 2;
-}
-
-.about-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.about-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  width: 100%;
-}
-
-.about-card {
-  background: var(--card-bg);
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
-  padding: 25px;
-  text-align: center;
-  transition: all 0.3s ease;
-  cursor: default;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-.about-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--primary-color);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-}
-
-.card-icon {
-  font-size: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 60px;
-}
-
-.card-text {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.5;
-  margin: 0;
-  letter-spacing: 0.3px;
-}
-
-.carousel-container {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.carousel {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-  background: var(--card-bg);
-}
-
-.carousel-slide {
+  inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+
+.photo-controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  animation: slideTransition 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 48px 18px 18px;
+  background: linear-gradient(to top, rgba(10, 10, 11, 0.85), transparent);
 }
 
-@keyframes slideTransition {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.photo-counter {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text);
 }
 
-/* Transición de imágenes suave */
+.photo-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.photo-btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(10, 10, 11, 0.4);
+  backdrop-filter: blur(6px);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.photo-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
 .fade-image-enter-active,
 .fade-image-leave-active {
-  transition: opacity 0.6s ease-in-out;
+  transition: opacity 0.45s ease;
 }
 
-.fade-image-enter-from {
-  opacity: 0;
-}
-
+.fade-image-enter-from,
 .fade-image-leave-to {
   opacity: 0;
 }
 
-.carousel-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: opacity 0.6s ease-in-out;
-}
-
-.carousel-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-}
-
-.carousel-btn {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 2px solid #000000;
-  background: #000000;
-  color: #ffffff;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-.carousel-btn:hover {
-  background: var(--primary-color);
-  color: white;
-  border-color: var(--primary-color);
-  transform: scale(1.1);
-}
-
-.carousel-btn:active {
-  transform: scale(0.95);
-}
-
-.carousel-dots {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: none;
-  background: #cccccc;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-}
-
-.dot:hover {
-  background: #000000;
-  transform: scale(1.2);
-}
-
-.dot.active {
-  background: #000000;
-  width: 32px;
-  border-radius: 6px;
-}
-
-.carousel-thumbnails {
+/* ---------- Baldosas de datos ---------- */
+.about-text {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  list-style: none;
 }
 
-.thumbnail {
-  aspect-ratio: 1 / 1;
-  border: 3px solid var(--border-color);
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 0;
-  background: transparent;
+.about-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  transition: border-color 0.3s ease, background 0.3s ease;
 }
 
-.thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
+.about-card:hover {
+  border-color: var(--line-strong);
+  background: var(--bg-elev-2);
 }
 
-.thumbnail:hover img {
-  transform: scale(1.05);
+.card-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+  font-size: 1rem;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-.thumbnail.active {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px var(--card-bg), 0 0 0 4px var(--primary-color);
+.about-card:hover .card-icon {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 
-/* Dark Theme Styles */
-:global(.dark-theme) .about-card {
-  background: var(--card-bg);
-  border-color: rgba(96, 165, 250, 0.2);
+.card-text {
+  font-size: 1rem;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--text);
 }
 
-:global(.dark-theme) .about-card:hover {
-  border-color: rgba(96, 165, 250, 0.6);
-  background: linear-gradient(135deg, #1a1f3a 0%, #141829 100%);
-  box-shadow: 0 12px 30px rgba(96, 165, 250, 0.2);
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .about-bento {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-tile {
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+    max-height: 640px;
+  }
 }
 
-:global(.dark-theme) .card-text {
-  color: var(--text-primary);
-}
-
-/* Responsive */
+/* Lista compacta en móvil: icono a la izquierda, texto a la derecha */
 @media (max-width: 768px) {
-  .about {
-    padding: 60px 0;
-  }
-
-  .section-title {
-    font-size: 1.8rem;
-  }
-
-  .about-content {
+  .about-text {
     grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .about-cards-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 0;
+    border-top: 1px solid var(--line);
   }
 
   .about-card {
-    padding: 20px;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .about-card:hover {
+    background: transparent;
   }
 
   .card-icon {
-    font-size: 2rem;
-    height: 50px;
-  }
-
-  .card-text {
-    font-size: 0.95rem;
-  }
-
-  .carousel-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-
-  .carousel-thumbnails {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .about {
-    padding: 40px 0;
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-    margin-bottom: 40px;
-  }
-
-  .about-cards-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .about-card {
-    padding: 18px;
-  }
-
-  .card-icon {
-    font-size: 1.8rem;
-    height: 45px;
-  }
-
-  .card-text {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
     font-size: 0.9rem;
   }
 
-  .carousel-controls {
-    gap: 15px;
-  }
-
-  .carousel-btn {
-    width: 36px;
-    height: 36px;
-  }
-
-  .carousel-thumbnails {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+  .card-text {
+    font-size: 0.92rem;
   }
 }
 </style>

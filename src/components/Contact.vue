@@ -1,11 +1,29 @@
 <template>
-  <section id="contacto" data-aos="fade-up">
-    <div class="container">
-      <h2 data-aos="fade-up">Contacto</h2>
-      <!-- <div class="contact-content" data-aos="fade-up" data-aos-delay="200"> -->
-        <!-- Formulario de contacto -->
-        <div class="contact-form-wrapper">
-          <form @submit.prevent="submitForm" class="contact-form">
+  <section id="contacto">
+    <div class="container contact-layout">
+      <div class="contact-intro" data-aos="fade-up">
+        <span class="eyebrow"><b>05</b> / Contacto</span>
+        <h2 class="contact-title">Hablemos<span>.</span></h2>
+        <p class="contact-lead">¿Tienes un proyecto en mente o una oferta? Escríbeme y lo vemos juntos.</p>
+
+        <a
+          class="contact-link"
+          href="https://www.linkedin.com/in/pablo-ramos-ballester-6424a0389/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="contact-link-icon"><i class="fab fa-linkedin-in"></i></span>
+          <span class="contact-link-text">
+            <small>También en</small>
+            LinkedIn
+          </span>
+          <i class="fas fa-arrow-right contact-link-arrow"></i>
+        </a>
+      </div>
+
+      <div class="contact-form-wrapper" data-aos="fade-up" data-aos-delay="100">
+        <form @submit.prevent="submitForm" class="contact-form">
+          <div class="form-row">
             <div class="form-group">
               <label for="name">Nombre</label>
               <input
@@ -27,67 +45,43 @@
                 required
               >
             </div>
-
-            <div class="form-group">
-              <label for="subject">Asunto</label>
-              <input
-                id="subject"
-                v-model="form.subject"
-                type="text"
-                placeholder="Asunto del mensaje"
-                required
-              >
-            </div>
-
-            <div class="form-group">
-              <label for="message">Mensaje</label>
-              <textarea
-                id="message"
-                v-model="form.message"
-                placeholder="Tu mensaje aquí..."
-                rows="5"
-                required
-              ></textarea>
-            </div>
-
-            <button type="submit" class="btn-submit">
-              {{ submitting ? 'Enviando...' : 'Enviar Mensaje' }}
-            </button>
-
-            <div v-if="successMessage" class="success-message">
-              {{ successMessage }}
-            </div>
-            <div v-if="errorMessage" class="error-message">
-              {{ errorMessage }}
-            </div>
-          </form>
-          <p class="contact-alternative">
-            O contacta conmigo vía 
-            <a href="https://www.linkedin.com/in/pablo-ramos-ballester-6424a0389/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          </p>
-        </div>
-
-        <!-- Enlaces de contacto -->
-        <!-- <div class="contact-links">
-          <p style="font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--text-primary);">
-            O conecta conmigo en:
-          </p>
-          <div class="links-container">
-            <a
-              v-for="contact in contacts"
-              :key="contact.type"
-              :href="contact.link"
-              :title="contact.label"
-              class="contact-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i :class="contact.icon"></i>
-              <span>{{ contact.label }}</span>
-            </a>
           </div>
-        </div> -->
-      <!-- </div> -->
+
+          <div class="form-group">
+            <label for="subject">Asunto</label>
+            <input
+              id="subject"
+              v-model="form.subject"
+              type="text"
+              placeholder="Asunto del mensaje"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="message">Mensaje</label>
+            <textarea
+              id="message"
+              v-model="form.message"
+              placeholder="Cuéntame un poco sobre el proyecto..."
+              rows="5"
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-submit" :disabled="submitting">
+            {{ submitting ? 'Enviando...' : 'Enviar mensaje' }}
+            <i v-if="!submitting" class="fas fa-arrow-right"></i>
+          </button>
+
+          <div v-if="successMessage" class="form-status success-message">
+            {{ successMessage }}
+          </div>
+          <div v-if="errorMessage" class="form-status error-message">
+            {{ errorMessage }}
+          </div>
+        </form>
+      </div>
     </div>
   </section>
 </template>
@@ -107,33 +101,7 @@ export default {
       },
       submitting: false,
       successMessage: '',
-      errorMessage: '',
-      contacts: [
-        {
-          type: 'email',
-          label: 'Email',
-          link: 'mailto:tu-email@ejemplo.com',
-          icon: 'fas fa-envelope'
-        },
-        {
-          type: 'github',
-          label: 'GitHub',
-          link: 'https://github.com/tu-usuario',
-          icon: 'fab fa-github'
-        },
-        {
-          type: 'linkedin',
-          label: 'LinkedIn',
-          link: 'https://linkedin.com/in/tu-perfil',
-          icon: 'fab fa-linkedin'
-        },
-        // {
-        //   type: 'twitter',
-        //   label: 'Twitter',
-        //   link: 'https://twitter.com/tu-usuario',
-        //   icon: 'fab fa-twitter'
-        // }
-      ]
+      errorMessage: ''
     }
   },
   mounted() {
@@ -181,37 +149,106 @@ export default {
 </script>
 
 <style scoped>
-#contacto {
-  padding: 80px 0;
-  background: var(--bg-color);
-  transition: background 0.3s ease;
-  overflow-x: hidden;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.contact-content {
+.contact-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 80px;
   align-items: start;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
+/* ---------- Columna izquierda ---------- */
+.contact-title {
+  margin-top: 20px;
+  font-size: clamp(3.2rem, 8vw, 6.5rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  color: var(--text);
+}
+
+.contact-title span {
+  color: var(--accent);
+}
+
+.contact-lead {
+  margin-top: 24px;
+  max-width: 420px;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 360px;
+  margin-top: 48px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.3s ease;
+}
+
+.contact-link:hover {
+  border-color: var(--line-strong);
+}
+
+.contact-link-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #0a66c2;
+  color: #fff;
+}
+
+.contact-link-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.contact-link-text small {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.contact-link-arrow {
+  color: var(--text-muted);
+  transition: transform 0.3s var(--ease), color 0.3s ease;
+}
+
+.contact-link:hover .contact-link-arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+/* ---------- Formulario ---------- */
 .contact-form-wrapper {
-  padding: 40px;
-  background: var(--card-bg);
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
 .form-group {
@@ -221,169 +258,91 @@ export default {
 }
 
 .form-group label {
-  font-weight: 600;
-  color: var(--text-primary);
-  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
 
 .form-group input,
 .form-group textarea {
-  padding: 12px 15px;
-  border: 2px solid var(--border-color);
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 1rem;
-  color: var(--text-primary);
-  background: var(--bg-color);
-  transition: all 0.3s ease;
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 140px;
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: var(--text-secondary);
+  color: var(--text-faint);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
-  background: var(--card-bg);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .btn-submit {
-  padding: 14px 28px;
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
+  align-self: flex-start;
+  margin-top: 4px;
 }
 
-.btn-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
 
-.btn-submit:active {
-  transform: translateY(0);
+.form-status {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  border: 1px solid currentColor;
 }
 
 .success-message {
-  padding: 12px 16px;
-  background: #d4edda;
-  color: #155724;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  border: 1px solid #c3e6cb;
-  animation: slideIn 0.3s ease;
+  color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .error-message {
-  padding: 12px 16px;
-  background: #f8d7da;
-  color: #721c24;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  border: 1px solid #f5c6cb;
-  animation: slideIn 0.3s ease;
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.08);
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
+/* ---------- Responsive ---------- */
+@media (max-width: 960px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.contact-alternative {
-  text-align: center;
-  margin-top: 20px;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-}
-
-.contact-alternative a {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.contact-alternative a:hover {
-  color: var(--primary-color);
-  text-decoration: underline;
-}
-
-.contact-links {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 40px;
-  background: var(--card-bg);
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  text-align: center;
-}
-
-.links-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.contact-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 15px 20px;
-  background: var(--primary-color);
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  border: 2px solid var(--primary-color);
-}
-
-.contact-link:hover {
-  transform: translateX(5px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-.contact-link i {
-  font-size: 1.2rem;
 }
 
 @media (max-width: 768px) {
-  .contact-content {
+  .contact-form-wrapper {
+    padding: 22px 18px;
+  }
+
+  .form-row {
     grid-template-columns: 1fr;
-    gap: 30px;
   }
 
-  .contact-form-wrapper,
-  .contact-links {
-    padding: 25px;
-  }
-
-  .links-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
+  .btn-submit {
+    align-self: stretch;
   }
 
   .contact-link {
-    flex: 1;
-    justify-content: center;
-    font-size: 0.9rem;
+    margin-top: 32px;
   }
 }
 </style>

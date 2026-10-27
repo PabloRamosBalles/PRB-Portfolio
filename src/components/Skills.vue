@@ -1,111 +1,48 @@
 <template>
-  <section id="habilidades" data-aos="fade-up">
+  <section id="habilidades">
     <div class="container">
-      <h2 data-aos="fade-up">Mis Habilidades</h2>
-      
-      <!-- Slider 1: Izquierda a Derecha -->
-      <div class="skills-slider" data-aos="fade-right" data-aos-delay="200">
-        <div class="slider-container">
-          <div class="slider-track slider-ltr">
-            <div 
-              v-for="(skill, index) in skillsGroup1" 
-              :key="`group1-${index}`"
-              class="skill-item"
-              :style="{ 
-                'background': `${skill.color}15`, 
-                'border-color': `${skill.color}40`,
-                '--skill-color': skill.color
-              }"
-            >
-              <i :class="`fas ${skill.icon}`" class="skill-icon"></i>
-              <span class="skill-name">{{ skill.name }}</span>
-            </div>
-            <!-- Duplicate para animación infinita -->
-            <div 
-              v-for="(skill, index) in skillsGroup1" 
-              :key="`group1-dup-${index}`"
-              class="skill-item"
-              :style="{ 
-                'background': `${skill.color}15`, 
-                'border-color': `${skill.color}40`,
-                '--skill-color': skill.color
-              }"
-            >
-              <i :class="`fas ${skill.icon}`" class="skill-icon"></i>
-              <span class="skill-name">{{ skill.name }}</span>
-            </div>
-          </div>
+      <header class="section-head" data-aos="fade-up">
+        <span class="eyebrow"><b>03</b> / Stack</span>
+        <div>
+          <h2 class="section-title">Mis habilidades</h2>
+          <p class="section-lead">Las herramientas con las que construyo, despliego y mantengo aplicaciones de principio a fin.</p>
         </div>
-      </div>
+      </header>
 
-      <!-- Slider 2: Derecha a Izquierda -->
-      <div class="skills-slider" data-aos="fade-left" data-aos-delay="400">
-        <div class="slider-container">
-          <div class="slider-track slider-rtl">
-            <div 
-              v-for="(skill, index) in skillsGroup2" 
-              :key="`group2-${index}`"
-              class="skill-item"
-              :style="{ 
-                'background': `${skill.color}15`, 
-                'border-color': `${skill.color}40`,
-                '--skill-color': skill.color
-              }"
-            >
-              <i :class="`fas ${skill.icon}`" class="skill-icon"></i>
-              <span class="skill-name">{{ skill.name }}</span>
-            </div>
-            <!-- Duplicate para animación infinita -->
-            <div 
-              v-for="(skill, index) in skillsGroup2" 
-              :key="`group2-dup-${index}`"
-              class="skill-item"
-              :style="{ 
-                'background': `${skill.color}15`, 
-                'border-color': `${skill.color}40`,
-                '--skill-color': skill.color
-              }"
-            >
-              <i :class="`fas ${skill.icon}`" class="skill-icon"></i>
-              <span class="skill-name">{{ skill.name }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="stack-grid">
+        <article
+          v-for="(group, index) in groups"
+          :key="group.id"
+          class="stack-panel"
+          data-aos="fade-up"
+          :data-aos-delay="index * 80"
+        >
+          <header class="panel-head">
+            <span class="panel-path">~/{{ group.id }}</span>
+            <span class="panel-count">{{ group.skills.length }}</span>
+          </header>
+          <h3 class="panel-title">{{ group.title }}</h3>
+          <p class="panel-text">{{ group.text }}</p>
 
-      <!-- Slider 3: Izquierda a Derecha -->
-      <div class="skills-slider" data-aos="fade-right" data-aos-delay="600">
-        <div class="slider-container">
-          <div class="slider-track slider-ltr">
-            <div 
-              v-for="(skill, index) in skillsGroup3" 
-              :key="`group3-${index}`"
+          <ul class="skill-list">
+            <li
+              v-for="skill in group.skills"
+              :key="skill.name"
               class="skill-item"
-              :style="{ 
-                'background': `${skill.color}15`, 
-                'border-color': `${skill.color}40`,
-                '--skill-color': skill.color
-              }"
+              :style="{ '--skill-color': skill.color }"
             >
               <i :class="`fas ${skill.icon}`" class="skill-icon"></i>
               <span class="skill-name">{{ skill.name }}</span>
-            </div>
-            <!-- Duplicate para animación infinita -->
-            <div 
-              v-for="(skill, index) in skillsGroup3" 
-              :key="`group3-dup-${index}`"
-              class="skill-item"
-              :style="{ 
-                'background': `${skill.color}15`, 
-                'border-color': `${skill.color}40`,
-                '--skill-color': skill.color
-              }"
-            >
-              <i :class="`fas ${skill.icon}`" class="skill-icon"></i>
-              <span class="skill-name">{{ skill.name }}</span>
-            </div>
-          </div>
-        </div>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <!-- Cinta con todo el stack -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span v-for="(name, i) in tickerItems" :key="i" class="ticker-item">{{ name }}</span>
       </div>
     </div>
   </section>
@@ -141,144 +78,195 @@ export default {
         { name: 'i18n', icon: 'fa-globe', color: '#FE5B02' }
       ]
     }
+  },
+  computed: {
+    groups() {
+      return [
+        { id: 'backend', title: 'Backend', text: 'APIs, modelos de datos y tareas asíncronas.', skills: this.skillsGroup1 },
+        { id: 'frontend', title: 'Frontend e integraciones', text: 'Interfaces reactivas, pagos y servicios externos.', skills: this.skillsGroup2 },
+        { id: 'cloud', title: 'Cloud y DevOps', text: 'Contenedores, despliegue continuo e infraestructura.', skills: this.skillsGroup3 }
+      ]
+    },
+    // Se duplica la lista para que la cinta sea infinita
+    tickerItems() {
+      const names = [...this.skillsGroup1, ...this.skillsGroup2, ...this.skillsGroup3].map(s => s.name)
+      return [...names, ...names]
+    }
   }
 }
 </script>
 
 <style scoped>
 #habilidades {
-  padding: 2rem 0;
-  overflow-x: hidden;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.skills-slider {
-  /* margin-bottom: 2rem; */
   overflow: hidden;
-  width: 100%;
 }
 
-.slider-container {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
+/* ---------- Bento ---------- */
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
-.slider-track {
+.stack-panel {
   display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+  transition: border-color 0.3s ease;
+}
+
+.stack-panel:hover {
+  border-color: var(--line-strong);
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 2.5rem;
-  width: fit-content;
-  padding: 1.5rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
 }
 
-/* Animaciones direccionales */
-.slider-ltr {
-  animation: slideMarqueeLTR 40s linear infinite;
+.panel-path {
+  color: var(--accent);
 }
 
-.slider-rtl {
-  animation: slideMarqueeRTL 40s linear infinite;
+.panel-count {
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--text-muted);
+}
+
+.panel-title {
+  margin-top: 40px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.panel-text {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.skill-list {
+  list-style: none;
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
 }
 
 .skill-item {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  flex-shrink: 0;
-  background: rgba(96, 165, 250, 0.1);
-  backdrop-filter: blur(10px);
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  border: 1px solid rgba(96, 165, 250, 0.2);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  min-width: fit-content;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  transition: padding 0.3s var(--ease);
+}
+
+.skill-item:last-child {
+  border-bottom: none;
 }
 
 .skill-item:hover {
-  background: var(--skill-color, rgba(96, 165, 250, 0.2));
-  border-color: var(--skill-color, rgba(96, 165, 250, 0.5));
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px var(--skill-color, rgba(96, 165, 250, 0.2));
+  padding-left: 6px;
 }
 
 .skill-icon {
-  font-size: 1.5rem;
-  color: var(--skill-color, var(--primary-color));
-  flex-shrink: 0;
-  width: 1.5rem;
+  width: 18px;
   text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-faint);
+  transition: color 0.3s ease;
+}
+
+.skill-item:hover .skill-icon {
+  color: var(--skill-color);
 }
 
 .skill-name {
-  font-size: 1rem;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+/* ---------- Cinta ---------- */
+.ticker {
+  margin-top: 96px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 60s linear infinite;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
   font-weight: 600;
-  color: var(--skill-color, var(--text-primary));
+  letter-spacing: -0.04em;
   white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.18);
 }
 
-/* Keyframes para izquierda a derecha */
-@keyframes slideMarqueeLTR {
-  0% {
-    transform: translateX(0);
+.ticker-item::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  margin: 0 36px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .stack-grid {
+    grid-template-columns: 1fr 1fr;
   }
-  100% {
-    transform: translateX(-50%);
+
+  .stack-panel:last-child {
+    grid-column: 1 / -1;
   }
 }
 
-/* Keyframes para derecha a izquierda */
-@keyframes slideMarqueeRTL {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-/* Responsive */
 @media (max-width: 768px) {
-  .skills-slider {
-    margin-bottom: 2rem;
+  .stack-grid {
+    grid-template-columns: 1fr;
   }
 
-  .slider-track {
-    gap: 1rem;
-    animation-duration: 25s !important;
+  .stack-panel {
+    padding: 22px;
   }
 
-  .skill-item {
-    padding: 0.8rem 1.2rem;
-    font-size: 0.9rem;
+  .panel-title {
+    margin-top: 24px;
   }
 
-  .skill-icon {
-    font-size: 1.2rem;
+  .ticker {
+    margin-top: 64px;
   }
 
-  .skill-name {
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .slider-track {
-    gap: 0.8rem;
-    animation-duration: 20s !important;
-  }
-
-  .skill-item {
-    padding: 0.6rem 1rem;
-  }
-
-  .skill-icon {
-    font-size: 1rem;
-  }
-
-  .skill-name {
-    font-size: 0.85rem;
+  .ticker-track {
+    animation-duration: 40s;
   }
 }
 </style>
